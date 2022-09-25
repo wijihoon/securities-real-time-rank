@@ -14,7 +14,7 @@ public class ExceptionMessage {
     public Map<String, String> errMsg(String msg, String errCode){
         Map<String, String> result = new HashMap<>();
         result.put("code", errCode);
-        result.put("messege", msg);
+        result.put("msg", msg);
         return result;
 
     }
