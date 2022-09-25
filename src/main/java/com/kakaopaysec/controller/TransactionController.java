@@ -39,33 +39,33 @@ public class TransactionController {
     public ResponseEntity<?> searchRankList(@PathVariable(required = false) Integer id, @RequestParam(required = false) Integer paging){
         try {
         	
-        	if((id != null && id > 3)
-			|| (paging != null && paging > 100)) {
-        			return new ResponseEntity<>(exceptionMessage.errMsg(ErrCode.E0101.getErrMsg(), ErrCode.E0101.getCode()) ,httpHeaders,HttpStatus.BAD_REQUEST);
-        	}
+            if((id != null && id > 3)
+	    || (paging != null && paging > 100)) {
+        	return new ResponseEntity<>(exceptionMessage.errMsg(ErrCode.E0102.getErrMsg(), ErrCode.E0102.getCode()) ,httpHeaders,HttpStatus.BAD_REQUEST);
+            }
         	
-        	return new ResponseEntity<Map<String, Object>>(transactionService.searchRankList(id, paging), httpHeaders, HttpStatus.OK);
+            return new ResponseEntity<Map<String, Object>>(transactionService.searchRankList(id, paging), httpHeaders, HttpStatus.OK);
         	
         }catch (ServiceException se){
-        	logger.error(se.toString());
-            return new ResponseEntity<>(exceptionMessage.errMsg(se.getMessage(), String.valueOf(se.getERR_CODE().value())) ,httpHeaders,se.getERR_CODE());
+            logger.error(se.toString());
+            return new ResponseEntity<>(exceptionMessage.errMsg(ErrCode.E0101.getErrMsg(), ErrCode.E0101.getCode()) ,httpHeaders,se.getERR_CODE());
         } catch (Exception e) {
             logger.error(e.toString());
-            return new ResponseEntity<>(Collections.singletonMap("error", "INTERNAL SERVER ERROR"), httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(exceptionMessage.errMsg(ErrCode.E0000.getErrMsg(), ErrCode.E0000.getCode()), httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
     @PostMapping(value = {"/randomRank"})
     public ResponseEntity<?> updateRandomRank(){
         try {
-        	rankRedisSevice.updateRandomRank();
-        	return new ResponseEntity<>(exceptionMessage.errMsg("success", String.valueOf("000")), httpHeaders, HttpStatus.OK);
+            rankRedisSevice.updateRandomRank();
+            return new ResponseEntity<>(exceptionMessage.errMsg("success", String.valueOf("000")), httpHeaders, HttpStatus.OK);
         }catch (ServiceException se){
-        	logger.error(se.toString());
-            return new ResponseEntity<>(exceptionMessage.errMsg(se.getMessage(), String.valueOf(se.getERR_CODE().value())) ,httpHeaders,se.getERR_CODE());
+            logger.error(se.toString());
+            return new ResponseEntity<>(exceptionMessage.errMsg(ErrCode.E0101.getErrMsg(), ErrCode.E0101.getCode()) ,httpHeaders,se.getERR_CODE());
         } catch (Exception e) {
             logger.error(e.toString());
-            return new ResponseEntity<>(Collections.singletonMap("error", "INTERNAL SERVER ERROR"), httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(exceptionMessage.errMsg(ErrCode.E0000.getErrMsg(), ErrCode.E0000.getCode()), httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
