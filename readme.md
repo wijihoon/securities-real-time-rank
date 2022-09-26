@@ -24,8 +24,8 @@
 ---
 
 ## 🏃‍♂️ ER 다이어그램
-<img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/34532192/97914961-06b7b480-1d94-11eb-84df-ac7ddc6ea094.png">
-![Uploading image.png…]()
+<img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/76634761/192251282-60522fe2-dc9a-4757-89f4-74f079692ec4.jpg">
+
 ---
 
 ## 🏃‍♂️ API 명세
