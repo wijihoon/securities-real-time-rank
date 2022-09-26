@@ -52,7 +52,6 @@
 		<dependency>
 		    <groupId>org.springframework.batch</groupId>
 		    <artifactId>spring-batch-core</artifactId>
-		    <version>4.3.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -90,7 +89,6 @@
 		<dependency>
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
-		    <version>1.4.200</version>
 		    <scope>runtime</scope>
 		</dependency>
 		<dependency> 
@@ -124,18 +122,15 @@
 		<dependency>
 	    	<groupId>org.junit.jupiter</groupId>
 	        <artifactId>junit-jupiter</artifactId>
-	        <version>5.7.2</version>
 	        <scope>test</scope>
 	    </dependency>
 	    <dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-core</artifactId>
-		    <version>2.12.4</version>
 		</dependency>
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
-		    <version>2.12.4</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.codehaus.jackson</groupId>
@@ -152,7 +147,6 @@
 		<plugins>
 	    	<plugin>
 	        	<artifactId>maven-surefire-plugin</artifactId>
-	            <version>2.22.2</version>
 	        </plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

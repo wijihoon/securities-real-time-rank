@@ -19,6 +19,6 @@ public class RankResponseInfo {
     private String codeName;
 	private Double rank;
 	private BigDecimal price;
-	private BigDecimal procent;
+	private BigDecimal percent;
 
 }
