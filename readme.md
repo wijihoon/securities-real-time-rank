@@ -15,6 +15,7 @@
 <img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/34532192/97914961-06b7b480-1d94-11eb-84df-ac7ddc6ea094.png">
 ---
 ## 🏃‍♂️ API 명세
+
 ### 요청 공통
 
 `헤더`
