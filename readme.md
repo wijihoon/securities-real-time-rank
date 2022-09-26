@@ -30,227 +30,230 @@
 
 ## 🏃‍♂️ API 명세
 
-### 요청 공통
+### HTTP 상태 코드
 
-`헤더`
-
-| 항목         | 값 (예)          | 설명           | 필수 여부|
-| ------------ | ---------------- | --------------- |--
-| Content-Type | application/json | `JSON` 으로 요청 |
-
-### 응답 공통
-
-`HTTP 응답코드`
-
-| 응답코드 | 설명                  |
+| 상태코드 | 싱태 | 설명 |
 | -------- | --------------------- |
-| `200` | **정상 응답**         |
-| `201` | **정상적으로 생성**         |
-| `400`    | 잘못된 요청           |
-| `404`    | 리소스를 찾을 수 없음 |
-| `500`    | 시스템 에러           |
+| `200` |성공| **정상 응답**         |
+| `201` |성공| **정상적으로 생성**         |
+| `400`  | 실패 | 잘못된 요청           |
+| `404`   | 실패 | 리소스를 찾을 수 없음 |
+| `500`   | 실패 | 시스템 에러           |
 
-`에러코드 및 메시지`
+### 에러 코드
 
-
-| 에러코드 | 메시지                  |
+| code | 설명  | HTTP상태코드|
 | -------- | --------------------- |
-| `E0000` | 예상치 못한 오류가 발생하였습니다.         |
-| `E0101`    | 서버 내부에서 처리 중에 에러가 발생했습니다.           |
-| `E0102`    | 파라미터 확인부탁드립니다. |
-| `E0103`    | 서비스 점검 중입니다. 공지사항을 확인해주세요.           |
-| `E0104`    | 헤더 정보 확인부탁드립니다.           |
+| `000` | 예상치 못한 오류가 발생하였습니다.         |	500 |
+| `101`    | 서버 내부에서 처리 중에 에러가 발생했습니다.           |	400 |
+| `102`    | 파라미터 확인부탁드립니다. |400|
+| `103`    | 서비스 점검 중입니다. 공지사항을 확인해주세요.           |400|
+| `104`    | 헤더 정보 확인부탁드립니다.           |400|
 
-`헤더`
-
-| 항목         | 값               | 설명             |
-| ------------ | ---------------- | ---------------- |
-| Content-Type | application/json | `JSON` 으로 응답 |
-
-`내용`
-
-| 이름    |  타입  | 필수 | 설명             |
-| ------- | ---- | --- | ---------------- |
-| code    | string |  ○   | 응답 코드     |
-| message | string |  ○   | API 별 응답 내용     |
-
-`응답 예시`
+##### Response
 
 ```json
+HTTP/1.1 400 Bad Request  
 {
-
-"cause":  null,
-"stackTrace":  [],
-"code":  "101",
-"message":  "서버 내부에서 처리 중에 에러가 발생했습니다.",
-"suppressed":  [],
-"localizedMessage":  "서버 내부에서 처리 중에 에러가 발생했습니다."
-
+  "code": 101,
+  "msg":"서버 내부에서 처리 중에 에러가 발생했습니다."
 }
 ```
 
 ###  모든 주제 랭킹 조회 API
+- 이 API는 카카오페이증권 모든 주제 Top5를 조회하는 API입니다.
+- 주문 조회 API를 사용해 개별 주문의 상세 정보를 조회합니다. 앱 어드민 키를 헤더에 담아 POST로 요청합니다. 아래 두 가지 예제 중 어느 방법을 사용해도 결과는 같습니다. 요청이 성공하면 응답은 바디에 JSON 객체로 주문 상세 정보를 포함합니다.
+
 ---
 
-#### 요청
+#### Response
 
-| 항목 | 값             |
-| ---- | -------------- |
-| URL  | `GET` /api/rank |
+| Name |  Type  | Descrption |
+| ---- | ---- | ----------- |
+| viewALot | ViewALot[] | 많이 본 상세 |
+| riseALot | RiseALot[] | 많이 오른 상세 |
+| dropALot | DropALot[] | 많이 내린 상세 |
+| volumeHigh | VolumeHigh[]  | 많이 보유한 상세 |
 
-#### 응답
+#### ViewALot(JSON), RiseALot(JSON), DropALot(JSON), VolumeHigh(JSON)
 
-`응답 내용`
+| Name |  Type  | Descrption |
+| ---- | ---- | ----------- |
+| code | String	 | 상품코드 |
+| codeNm | String	 | 상품코드몇 |
+| rank | BigDecimal | 순위 |
+| price | BigDecimal  | 가격 |
+| percent | Double  | 백분율 |
 
-| 이름 |  타입  | 필수 | 설명        |
-| ---- | :----: | :---: | ----------- |
-| viewALotList.code | String | ○ | 코드 |
-| viewALotList.codeName | String | ○ | 코드명 |
-| viewALotList.rank | Double | ○ | 순위 |
-| viewALotList.price | BigDecimal | ○ | 금액 |
-| viewALotList.percent | BigDecimal | ○ | 백분율 |
-| riseALotList.code | String | ○ | 코드 |
-| riseALotList.codeName | String | ○ | 코드명 |
-| riseALotList.rank | Double| ○ | 순위 |
-| riseALotList.price | BigDecimal | ○ | 금액 |
-| riseALotList.percent | BigDecimal | ○ | 백분율 |
-| dropALotList.code | String | ○ | 코드 |
-| dropALotList.codeName | String | ○ | 코드명 |
-| dropALotList.rank | Double | ○ | 순위 |
-| dropALotList.price | BigDecimal | ○ | 금액 |
-| dropALotList.percent | BigDecimal | ○ | 백분율 |
-| volumeHighList.code | String  | ○ | 코드 |
-| volumeHighList.codeName | String  | ○ | 코드명 |
-| volumeHighList.rank | Double  | ○ | 순위 |
-| volumeHighList.price | BigDecimal | ○ | 금액 |
-| volumeHighList.percent | BigDecimal  | ○ | 백분율 |
-
-`응답 예시`
+#### Sample
+##### Request
 
 ```json
+curl -v -X GET "http://localhost:8080/api/rank"
+```
+
+##### Response
+
+```json
+HTTP/1.1 200 OK
+Content-type: application/json;charset=UTF-8
 {
-"viewALotList":  [
-	{
-		"code": 005930,
-		"codeName": 삼성전자,
-		"rank":  1,
-		"price":  61500,
-		"percent":  0.00
-	},
-	{
-		"code": 373220,
-		"codeName": LG에너지솔루션,
-		"rank":  2,
-		"price":  452000,
-		"percent":  0.00
-	}
-]
+    "amount": {
+        "total": 2200,
+        "tax_free": 0,
+        "vat": 200,
+        "point": 0,
+        "discount": 0,
+        "green_deposit": 0
+    },
+    "canceled_amount": {
+        "total": 0,
+        "tax_free": 0,
+        "vat": 0,
+        "point": 0,
+        "discount": 0,
+        "green_deposit": 0
+    },
+    "cancel_available_amount": {
+        "total": 2200,
+        "tax_free": 0,
+        "vat": 200,
+        "point": 0,
+        "discount": 0,
+        "green_deposit": 0
+    },
+    "payment_action_details": [
+        {
+            "aid": "A5678901234567890123",
+            "payment_action_type": "PAYMENT",
+            "payment_method_type": "MONEY",
+            "amount": 2200,
+            "point_amount": 0,
+            "discount_amount": 0,
+            "approved_at": "2016-11-15T21:20:48",
+            "green_deposit": 0
+        }
+    ]
 }
 ```
 
 ###  주제별 랭킹 조회 API
----
-
-#### 요청
-
-| 항목 | 값             |
-| ---- | -------------- |
-| URL  | `GET` /api/rank/{id} |
-
-`항목`
-
-| 이름       |  타입  | 필수 | 설명                                                         |
-| ---------- | :----: | :---: | ------------------------------------------------------------ |
-| id     | int |  x   |  default = 모든 주제 상위 5건, 0 = 많이 본, 1 = 많이 오른, 2 = 많이 내린, 3 = 많이 보유한  |
-| paging      | int  |  x   | default = 20, max = 100                                          |
-
-`응답 예시`
-
-```json
-{
-  "paging": 100
-}
-```
-
-#### 응답
-
-`응답 내용`
-
-| 이름 |  타입  | 필수 | 설명        |
-| ---- | :----: | :---: | ----------- |
-| viewALotList.code | String | ○ | 코드 |
-| viewALotList.codeName | String | ○ | 코드명 |
-| viewALotList.rank | Double | ○ | 순위 |
-| viewALotList.price | BigDecimal | ○ | 금액 |
-| viewALotList.percent | BigDecimal | ○ | 백분율 |
-| riseALotList.code | String | ○ | 코드 |
-| riseALotList.codeName | String | ○ | 코드명 |
-| riseALotList.rank | Double| ○ | 순위 |
-| riseALotList.price | BigDecimal | ○ | 금액 |
-| riseALotList.percent | BigDecimal | ○ | 백분율 |
-| dropALotList.code | String | ○ | 코드 |
-| dropALotList.codeName | String | ○ | 코드명 |
-| dropALotList.rank | Double | ○ | 순위 |
-| dropALotList.price | BigDecimal | ○ | 금액 |
-| dropALotList.percent | BigDecimal | ○ | 백분율 |
-| volumeHighList.code | String  | ○ | 코드 |
-| volumeHighList.codeName | String  | ○ | 코드명 |
-| volumeHighList.rank | Double  | ○ | 순위 |
-| volumeHighList.price | BigDecimal | ○ | 금액 |
-| volumeHighList.percent | BigDecimal  | ○ | 백분율 |
-
-`응답 예시`
-
-```json
-{
-"viewALotList":  [
-	{
-		"code": 005930,
-		"codeName": 삼성전자,
-		"rank":  1,
-		"price":  61500,
-		"percent":  0.00
-	},
-	{
-		"code": 373220,
-		"codeName": LG에너지솔루션,
-		"rank":  2,
-		"price":  452000,
-		"percent":  0.00
-	}
-]
-}
-```
-
-### 순위 랜덤 변경 API
+- 이 API는 카카오페이증권 주제별 최대 Top100을 조회하는 API입니다.
+- 주문 조회 API를 사용해 개별 주문의 상세 정보를 조회합니다. 앱 어드민 키를 헤더에 담아 POST로 요청합니다. 아래 두 가지 예제 중 어느 방법을 사용해도 결과는 같습니다. 요청이 성공하면 응답은 바디에 JSON 객체로 주문 상세 정보를 포함합니다.
 
 ---
 
-#### 요청
+#### Request
 
-| 항목 | 값             | 설명 |
-| ---- | -------------- | --- |
-| URL  | `POST` /api/randomRank|
+| Name |  Type  | Descrption |
+| ---- | ---- | ----------- |
+| id | int | 0 = 많이 본, 1 = 많이 오른, 2 = 많이 내린, 3 = 많이 보유한 |
+| paging | int | default = 20, max = 100 |
 
---
+#### Response
 
-#### 응답
+| Name |  Type  | Descrption |
+| ---- | ---- | ----------- |
+| viewALot | ViewALot[] | 많이 본 상세 |
+| riseALot | RiseALot[] | 많이 오른 상세 |
+| dropALot | DropALot[] | 많이 내린 상세 |
+| volumeHigh | VolumeHigh[]  | 많이 보유한 상세 |
 
-`응답 내용`
+#### ViewALot(JSON), RiseALot(JSON), DropALot(JSON), VolumeHigh(JSON)
 
-| 이름 |  타입  | 필수 | 설명        |
-| ---- | :----: | :---: | ----------- |
-| code   | String |  ○   | 결과코드 |
-| message | String |  ○   | 결과내용 |
+| Name |  Type  | Descrption |
+| ---- | ---- | ----------- |
+| code | String	 | 상품코드 |
+| codeNm | String	 | 상품코드몇 |
+| rank | BigDecimal | 순위 |
+| price | BigDecimal  | 가격 |
+| percent | Double  | 백분율 |
 
-`응답 예시`
+#### Sample
+##### Request
 
+```json
+curl -v -X GET "http://localhost:8080/api/rank/{id}"
 ```
+
+##### Response
+
+```json
+HTTP/1.1 200 OK
+Content-type: application/json;charset=UTF-8
 {
-"code" : 000,
-"message" : success
+    
+    "amount": {
+        "total": 2200,
+        "tax_free": 0,
+        "vat": 200,
+        "point": 0,
+        "discount": 0,
+        "green_deposit": 0
+    },
+    "canceled_amount": {
+        "total": 0,
+        "tax_free": 0,
+        "vat": 0,
+        "point": 0,
+        "discount": 0,
+        "green_deposit": 0
+    },
+    "cancel_available_amount": {
+        "total": 2200,
+        "tax_free": 0,
+        "vat": 200,
+        "point": 0,
+        "discount": 0,
+        "green_deposit": 0
+    },
+    "payment_action_details": [
+        {
+            "aid": "A5678901234567890123",
+            "payment_action_type": "PAYMENT",
+            "payment_method_type": "MONEY",
+            "amount": 2200,
+            "point_amount": 0,
+            "discount_amount": 0,
+            "approved_at": "2016-11-15T21:20:48",
+            "green_deposit": 0
+        }
+    ]
 }
 ```
+
+###  순위 랜덤 변경 API
+- 이 API는 카카오페이증권 모든 주제를 랜덤하게 변경하는 API입니다.
+- 주문 조회 API를 사용해 개별 주문의 상세 정보를 조회합니다. 앱 어드민 키를 헤더에 담아 POST로 요청합니다. 아래 두 가지 예제 중 어느 방법을 사용해도 결과는 같습니다. 요청이 성공하면 응답은 바디에 JSON 객체로 주문 상세 정보를 포함합니다.
+
+---
+
+#### Response
+
+| Name |  Type  | Descrption |
+| ---- | ---- | ----------- |
+| code | String | 코드 |
+| message | String | 메시지 |
+
+#### Sample
+##### Request
+
+```json
+curl -v -X POST "http://localhost:8080/api/randomRank"
+```
+
+##### Response
+
+```json
+HTTP/1.1 200 OK
+Content-type: application/json;charset=UTF-8
+{
+    
+    "code": 201,
+    "message": "success"
+}
+```
+
 핵심 문제 해결 전략
 ---
 ### 주제별 랭킹 조회 API
@@ -266,8 +269,4 @@
 - KP_TB_RAIN_MONEY의 FK를 KP_TB_ROOM_USER의 복합키로 할지, 각각의 PK로 할지 고민하다가 복합키로 결정하였으나 조회문이 복잡해지는 단점 생.
 - TOKEN 필드의 데이터크기를 3자리로 잡았는데, 추후 확장성을 고려해 더 넉넉하게 잡았어도 좋았겠다는 생각. 서비스가 확장되면 인원이 늘어나고 3자리수로 유니크한 문자가 한계가 있기 때문
 - PK Java에서는 Long인데 데이터 타입 Unsigned int로 할지, bigint로 할지 고민했다가 Java에서는 기본적으로 unsigned type을 지원하지 않아서 방법은 있겠으나 시간을 뺏길 것 같아서 bigint 사용
-
-### 총평
-원래 자바가 비효율적인 것 같아서 조금 싫어했는데, 이번 프로젝트를 계기로 자바도 효율적으로 쓸 수 있는 것들이 엄청 많구나라고 알게됨. boot, JPA/Hibernate, loombok, gradle, IntelliJ 등 을 통해서 이렇게 느꼈는데, 특히 JPA는 너무 좋았지만 파이썬의 ORM과 비교하면 그래도 해줘야할 게 많다. 이전에 썼던 Mybatis가 금융, SI기업에서 많이 쓰는 이유가 안정적이고 원래 쓰던거여서 라고 하던데, 안정화되면 빨리 도입했으면 좋겠다. 이번에 IntelliJ + gradle 조합을 쓰면서 너무 fancy 하다고 생각.
-언어에 대한 인식을 바꾸게 해준 너무 좋은 경험.
 
