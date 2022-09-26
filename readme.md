@@ -1,6 +1,16 @@
 ## KAKAOPAY RAIN MONEY API
 
 ---
+
+## 🏃‍♂️ 목차
+- [개발 환경](#개발-환경)
+- [ER 다이어그램](#ER-다이어그램)
+- [API 명세](#API-명세)
+- [필수 제약사항](#필수-제약사항)
+- [해결방법](#해결방법)
+
+---
+
 ## 🏃‍♂️ 개발 환경
 * JDK 11
 * Spring Boot 2.5.3
@@ -10,7 +20,9 @@
 * Redis
 * Maven
 * Junit
+
 ---
+
 ## 🏃‍♂️ ER 다이어그램
 <img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/34532192/97914961-06b7b480-1d94-11eb-84df-ac7ddc6ea094.png">
 
@@ -55,13 +67,14 @@
 | ------------ | ---------------- | ---------------- |
 | Content-Type | application/json | `JSON` 으로 응답 |
 
-내용
+'내용'
 
 | 이름    |  타입  | 필수 | 설명             |
 | ------- | :----: | :---: | ---------------- |
 | code    | string |  ○   | 응답 코드     |
 | message | string |  ○   | API 별 응답 내용     |
-응답 예
+
+'응답 예'
 
 ```json
 {
@@ -92,7 +105,7 @@
 | id     | int |  x   |  default = 모든 주제 상위 5건, 0 = 많이 본, 1 = 많이 오른, 2 = 많이 내린, 3 = 많이 보유한  |
 | paging      | int  |  x   | default = 20, max = 100                                          |
 
-요청 예)
+'요청 예'
 
 ```json
 {
@@ -127,21 +140,21 @@
 | volumeHighList.price | BigDecimal | ○ | 금액 |
 | volumeHighList.percent | BigDecimal  | ○ | 백분율 |
 
-응답 예시
+'응답 예시'
 
 ```json
 {
 "viewALotList":  [
 	{
 		"code": 005930,
-		"codeName":  삼성전자,
+		"codeName": 삼성전자,
 		"rank":  1,
 		"price":  61500,
 		"percent":  0.00
 	},
 	{
 		"code": 373220,
-		"codeName":  LG에너지솔루션,
+		"codeName": LG에너지솔루션,
 		"rank":  2,
 		"price":  452000,
 		"percent":  0.00
@@ -151,6 +164,7 @@
 ```
 
 ### 순위 랜덤 변경 API
+
 ---
 
 #### 요청
