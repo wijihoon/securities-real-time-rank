@@ -67,14 +67,14 @@
 | ------------ | ---------------- | ---------------- |
 | Content-Type | application/json | `JSON` 으로 응답 |
 
-'내용'
+`내용`
 
 | 이름    |  타입  | 필수 | 설명             |
-| ------- | :----: | :---: | ---------------- |
+| ------- | ---- | --- | ---------------- |
 | code    | string |  ○   | 응답 코드     |
 | message | string |  ○   | API 별 응답 내용     |
 
-'응답 예'
+`응답 예시`
 
 ```json
 {
@@ -86,6 +86,65 @@
 "suppressed":  [],
 "localizedMessage":  "서버 내부에서 처리 중에 에러가 발생했습니다."
 
+}
+```
+
+###  모든 주제 랭킹 조회 API
+---
+
+#### 요청
+
+| 항목 | 값             |
+| ---- | -------------- |
+| URL  | `GET` /api/rank |
+
+#### 응답
+
+`응답 내용`
+
+| 이름 |  타입  | 필수 | 설명        |
+| ---- | :----: | :---: | ----------- |
+| viewALotList.code | String | ○ | 코드 |
+| viewALotList.codeName | String | ○ | 코드명 |
+| viewALotList.rank | Double | ○ | 순위 |
+| viewALotList.price | BigDecimal | ○ | 금액 |
+| viewALotList.percent | BigDecimal | ○ | 백분율 |
+| riseALotList.code | String | ○ | 코드 |
+| riseALotList.codeName | String | ○ | 코드명 |
+| riseALotList.rank | Double| ○ | 순위 |
+| riseALotList.price | BigDecimal | ○ | 금액 |
+| riseALotList.percent | BigDecimal | ○ | 백분율 |
+| dropALotList.code | String | ○ | 코드 |
+| dropALotList.codeName | String | ○ | 코드명 |
+| dropALotList.rank | Double | ○ | 순위 |
+| dropALotList.price | BigDecimal | ○ | 금액 |
+| dropALotList.percent | BigDecimal | ○ | 백분율 |
+| volumeHighList.code | String  | ○ | 코드 |
+| volumeHighList.codeName | String  | ○ | 코드명 |
+| volumeHighList.rank | Double  | ○ | 순위 |
+| volumeHighList.price | BigDecimal | ○ | 금액 |
+| volumeHighList.percent | BigDecimal  | ○ | 백분율 |
+
+`응답 예시`
+
+```json
+{
+"viewALotList":  [
+	{
+		"code": 005930,
+		"codeName": 삼성전자,
+		"rank":  1,
+		"price":  61500,
+		"percent":  0.00
+	},
+	{
+		"code": 373220,
+		"codeName": LG에너지솔루션,
+		"rank":  2,
+		"price":  452000,
+		"percent":  0.00
+	}
+]
 }
 ```
 
@@ -105,7 +164,7 @@
 | id     | int |  x   |  default = 모든 주제 상위 5건, 0 = 많이 본, 1 = 많이 오른, 2 = 많이 내린, 3 = 많이 보유한  |
 | paging      | int  |  x   | default = 20, max = 100                                          |
 
-'요청 예'
+`응답 예시`
 
 ```json
 {
@@ -140,7 +199,7 @@
 | volumeHighList.price | BigDecimal | ○ | 금액 |
 | volumeHighList.percent | BigDecimal  | ○ | 백분율 |
 
-'응답 예시'
+`응답 예시`
 
 ```json
 {
@@ -172,8 +231,6 @@
 | 항목 | 값             | 설명 |
 | ---- | -------------- | --- |
 | URL  | `POST` /api/randomRank|
-
-
 
 --
 
