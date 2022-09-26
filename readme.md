@@ -50,7 +50,7 @@
 | `103`    | 서비스 점검 중입니다. 공지사항을 확인해주세요.           |400|
 | `104`    | 헤더 정보 확인부탁드립니다.           |400|
 
-##### Response
+#### Response
 
 ```json
 HTTP/1.1 400 Bad Request  
@@ -86,13 +86,13 @@ HTTP/1.1 400 Bad Request
 | percent | Double  | 백분율 |
 
 #### Sample
-##### Request
+#### Request
 
 ```json
 curl -v -X GET "http://localhost:8080/api/rank"
 ```
 
-##### Response
+#### Response
 
 ```json
 HTTP/1.1 200 OK
@@ -170,13 +170,13 @@ Content-type: application/json;charset=UTF-8
 | percent | Double  | 백분율 |
 
 #### Sample
-##### Request
+#### Request
 
 ```json
 curl -v -X GET "http://localhost:8080/api/rank/{id}"
 ```
 
-##### Response
+#### Response
 
 ```json
 HTTP/1.1 200 OK
@@ -236,13 +236,13 @@ Content-type: application/json;charset=UTF-8
 | message | String | 메시지 |
 
 #### Sample
-##### Request
+#### Request
 
 ```json
 curl -v -X POST "http://localhost:8080/api/randomRank"
 ```
 
-##### Response
+#### Response
 
 ```json
 HTTP/1.1 200 OK
@@ -254,7 +254,7 @@ Content-type: application/json;charset=UTF-8
 }
 ```
 
-핵심 문제 해결 전략
+## 🏃‍♂️ 핵심 문제 해결 전략
 ---
 ### 주제별 랭킹 조회 API
 - 요구사항에는 없는 내용이지만 현재 상용 뿌리기 서비스에는 있는 뿌릴 인원수 최대값을 채팅방 사용자 수 - 1(본인) 보다 크지 않도록 구현. 불필요하게 뿌릴 인원수를 많이 설정하여 요청자 지갑으로 환불하는 로직을 호출해야하기 때문에 서비스 과부하 가능성 있기 때문(프론트에서 막아도 됨)
