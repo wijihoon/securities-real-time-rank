@@ -1,16 +1,5 @@
-# 카카오페이증권 사전과제
+## KAKAOPAY RAIN MONEY API
 
----
-## 🏃‍♂️  프로젝트 정보
-* 일자 : 2022-09-26
-* 내용 : 
-  - 실시간 순위 정보를 고객에서 제공하는 서비스
-  - “많이 본”, “많이 오른”, “많이 내린”, “거래량 많은” 각 주제로 Back-End 서비스 구성
----
-## 🏃‍♂️ 목차
-* [설계 내용](#설계-내용)
-* [핵심 문제해결](#핵심-문제해결)
-* [분석한 내용](#분석한-내용)
 ---
 ## 🏃‍♂️ 개발 환경
 * JDK 11
@@ -22,220 +11,189 @@
 * Maven
 * Junit
 ---
-  
-## 빌드 및 실행하기
-### 터미널 환경
-```
- - 프로젝트 zip 다운 후 압축해제
- - intellij > File > New > Project from Existing Sources... 선택
- - external model > gradle 선택
- - KakaopaysecApplication 실행
-```
+## 🏃‍♂️ ER 다이어그램
+<img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/34532192/97914961-06b7b480-1d94-11eb-84df-ac7ddc6ea094.png">
+---
+## 🏃‍♂️ API 명세
+### 요청 공통
 
-## 기능 요구사항
-- 서비스 제공에 필요한 RESTful API 를 구현합니다.
-- 실시간 데이터의 변동을 위해 데이터가 랜덤으로 변경되는 API를 추가로 개발해 주시기 바랍니다.
-- Application이 로딩될 때 기본 데이터가 DB에 적재하도록 합니다. (주식 종목에 대한 정보는 첨부된 데이터를 참고하시면 됩니다.)
-- 데이터 테이블 구조는 효율적인 방식으로 스스로 설계해 주시면 됩니다.
-- 각 기능 및 제약사항에 대한 단위테스트를 작성합니다.
-  
-## API 설명
-- 모든 주제의 상위 5건 조회 API
-  - 주제별 상위 5건 데이터를 한번에 가져옵니다.
-- 주제별 조회 API (주제는 4가지로 분류)
-  - “많이 본”
-  - “많이 오른”
-  - “많이 내린”
-  - “거래량 많은”
-- 요청은 페이징(기본 20건) 처리하여 조회합니다.
-- 최대 100개까지만 데이터를 제공합니다.
-- 순위를 랜덤하게 변경할 수 있는 API 
-  - 주제 전체의 순위가 랜덤하게 변경될 수 있도록 합니다.
+`헤더`
 
-## 필수 제약사항
-- 설계 내용과 이유, 핵심 문제해결 전략 및 분석한 내용을 작성하여 “readme.md” 파일에 첨부 해주세요.
-- 개발은 SpringBoot 와 JAVA를 사용해서 구현하시기 바랍니다.
-- API의 HTTP Method들은 자유롭게 선택하시면 됩니다. (GET, POST, DELETE, PUT, PATCH)
-- 에러응답, 에러코드는 자유롭게 정의해주세요.
-- 단위 테스트를 작성하세요.
+| 항목         | 값 (예)          | 설명           | 필수 여부|
+| ------------ | ---------------- | --------------- |--
+| Content-Type | application/json | `JSON` 으로 요청 |
 
-## 해결방법
-### 1. 데이터 파일('.csv')을 데이터베이스에 저장하는 API 개발
-- Request
-```
-http://localhost:8080/db/csv
-```
+### 응답 공통
 
-- CSV 파일을 데이터베이스에 저장하는 API개발
-  - data.sql을 이용하여 실행 시 sql를 실행하도록 구현했지만 요구사항과 맞지 않다고 판단하여 수정.
-  - CsvController을 이용한 업로드보다 CSVReaderService을 추가 개발하여 /resources/data 경로의 csv파일을 데이터베이스에 저장하도록 수정
+`HTTP 응답코드`
 
-### 2. 2018년, 2019년 각 연도별 합계 금액이 가장 많은 고객을 추출하는 API 개발.(단, 취소여부가 ‘Y’ 거래는 취소된 거래임, 합계 금액은 거래금액에서 수수료를 차감한 금액임)
-- Request
-```
-http://localhost:8080/year/maxSumAmt
-```
+| 응답코드 | 설명                  |
+| -------- | --------------------- |
+| `200` | **정상 응답**         |
+| `201` | **정상적으로 생성**         |
+| `400`    | 잘못된 요청           |
+| `404`    | 리소스를 찾을 수 없음 |
+| `500`    | 시스템 에러           |
 
-- Response
-```json
-[
-  {
-    "year": "2018",
-    "name": "테드",
-    "accNo": "11111114",
-    "sumAmt": 28992000
-  },
-  {
-    "year": "2019",
-    "name": "에이스",
-    "accNo": "11111112",
-    "sumAmt": 40998400
-  }
-]
-```  
+`에러코드 및 메시지`
 
-- `JpaRepository`에서 `@Query` 어노테이션을 통해 연도별 고객금액과 연도별 합계 금액 결과를 가져와 두 리스트를 비교하여 최대 값을 보여주도록 개발
 
-### 3. 2018년 또는 2019년에 거래가 없는 고객을 추출하는 API 개발.
-(취소여부가 ‘Y’ 거래는 취소된 거래임)
+| 에러코드 | 메시지                  |
+| -------- | --------------------- |
+| `E0000` | 예상치 못한 오류가 발생하였습니다.         |
+| `E0101`    | 서버 내부에서 처리 중에 에러가 발생했습니다.           |
+| `E0102`    | 파라미터 확인부탁드립니다. |
+| `E0103`    | 서비스 점검 중입니다. 공지사항을 확인해주세요.           |
+| `E0104`    | 헤더 정보 확인부탁드립니다.           |
 
-- Request
-```
-http://localhost:8080/year/notTrx
-```
+`헤더`
 
-- Response
-```json
-[
-  {
-    "year": "2018",
-    "name": "사라",
-    "acctNo": "11111115"
-  },
-  {
-    "year": "2018",
-    "name": "에이스",
-    "acctNo": "11111121"
-  },
-  {
-    "year": "2019",
-    "name": "테드",
-    "acctNo": "11111114"
-  },
-  {
-    "year": "2019",
-    "name": "에이스",
-    "acctNo": "11111121"
-  }
-]
-```
+| 항목         | 값               | 설명             |
+| ------------ | ---------------- | ---------------- |
+| Content-Type | application/json | `JSON` 으로 응답 |
 
-- `JpaRepository`에서 `@Query` 어노테이션을 이용하여 계좌정보, 거래내역을 LEFT JOIN 하여 거래금액이 null인 고객추출
-- 취소거래도 거래라고 볼 수 있어 거래가 있는 고객으로 보는게 맞다고 생각하여 포함
+내용
 
-### 4. 연도별 관리점별 거래금액 합계를 구하고 합계금액이 큰 순서로 출력하는 API 개발.( 취소여부가 ‘Y’ 거래는 취소된 거래임)
+| 이름    |  타입  | 필수 | 설명             |
+| ------- | :----: | :---: | ---------------- |
+| code    | string |  ○   | 응답 코드     |
+| message | string |  ○   | API 별 응답 내용     |
+응답 예
 
-- Request
-```
-http://localhost:8080/year/branSumAmt
-```
-
-- Response
-```json
-[
-  {
-  "year": "2018",
-  "dataList":[
-    {
-    "brNm": "분당점",
-    "brNo": "B",
-    "trxAmt": "38484000"
-    },
-    {
-    "brNm": "판교점",
-    "brNo": "A",
-    "trxAmt": "20505700"
-    },
-    {
-    "brNm": "강남점",
-    "brNo": "C",
-    "trxAmt": "20232867"
-    },
-    {
-    "brNm": "잠실점",
-    "brNo": "D",
-    "trxAmt": "14000000"
-    }
-  ]
-},
-{
-  "year": "2019",
-  "dataList":[
-    {
-    "brNm": "판교점",
-    "brNo": "A",
-    "trxAmt": "66795100"
-    },
-    {
-    "brNm": "분당점",
-    "brNo": "B",
-    "trxAmt": "45396700"
-    },
-    {
-    "brNm": "강남점",
-    "brNo": "C",
-    "trxAmt": "19500000"
-    },
-    {
-    "brNm": "잠실점",
-    "brNo": "D",
-    "trxAmt": "6000000"
-    }
-  ]
-},
-{
-  "year": "2020",
-  "dataList":[
-    {
-    "brNm": "을지로점",
-    "brNo": "E",
-    "trxAmt": "1000000"
-    }
-    ]
-  }
-]
-```
-
-- `JpaRepository`에서 `@Query` 어노테이션을 이용하여 연도별 지점거래내역 추출
-- 자료출력 형태를 위해 연도를 키로 지점정보를 데이터로 Map<String, List> 저장 후 출력형태에 맞게 리스트맵에 넣어 출력
-
-### 5. 분당점과 판교점을 통폐합하여 판교점으로 관리점 이관을 하였습니다. 지점명을 입력하면 해당지점의 거래금액 합계를 출력하는 API 개발( 취소여부가 ‘Y’ 거래는 취소된 거래임,)
-
-- Request
-```
-http://localhost:8080/bran/transfer?brName=분당점
-```
-- Response
-```json
-
-{
-  "code": "404",
-  "메세지": "br code not found error"
-}
-```
-- Request
-```
-http://localhost:8080/bran/transfer?brName=판교점
-```
-- Response
 ```json
 {
-  "brName": "판교점",
-  "brCode": "A",
-  "sumAmt": 174601600
+
+"cause":  null,
+"stackTrace":  [],
+"code":  "101",
+"message":  "서버 내부에서 처리 중에 에러가 발생했습니다.",
+"suppressed":  [],
+"localizedMessage":  "서버 내부에서 처리 중에 에러가 발생했습니다."
+
 }
 ```
 
-- `JpaRepository`에서 `@Query` 어노테이션을 이용하여 지점별 합계금액 추출
-- 테이블로 관리를 하지 않아, 신규 리스트에 이관 지점 정보 저장(이관지점이 없을 경우 현재 지점명과 동일하게 세팅)
-- 지점별 합계금액 조회 시 이관 지점 리스트를 조회하여 리스트 갯수가 0일 경우 404, br code not found error로 Exception 발생, 1이 초과할 경우 반복문을 통한 합계금액 +
+###  주제별 랭킹 조회 API
+---
+
+#### 요청
+
+| 항목 | 값             |
+| ---- | -------------- |
+| URL  | `GET` /api/rank/{id} |
+
+`항목`
+
+| 이름       |  타입  | 필수 | 설명                                                         |
+| ---------- | :----: | :---: | ------------------------------------------------------------ |
+| id     | int |  x   |  default = 모든 주제 상위 5건, 0 = 많이 본, 1 = 많이 오른, 2 = 많이 내린, 3 = 많이 보유한  |
+| paging      | int  |  x   | default = 20, max = 100                                          |
+
+요청 예)
+
+```json
+{
+  "paging": 100
+}
+```
+
+#### 응답
+
+`응답 내용`
+
+| 이름 |  타입  | 필수 | 설명        |
+| ---- | :----: | :---: | ----------- |
+| viewALotList.code | String | ○ | 코드 |
+| viewALotList.codeName | String | ○ | 코드명 |
+| viewALotList.rank | Double | ○ | 순위 |
+| viewALotList.price | BigDecimal | ○ | 금액 |
+| viewALotList.percent | BigDecimal | ○ | 백분율 |
+| riseALotList.code | String | ○ | 코드 |
+| riseALotList.codeName | String | ○ | 코드명 |
+| riseALotList.rank | Double| ○ | 순위 |
+| riseALotList.price | BigDecimal | ○ | 금액 |
+| riseALotList.percent | BigDecimal | ○ | 백분율 |
+| dropALotList.code | String | ○ | 코드 |
+| dropALotList.codeName | String | ○ | 코드명 |
+| dropALotList.rank | Double | ○ | 순위 |
+| dropALotList.price | BigDecimal | ○ | 금액 |
+| dropALotList.percent | BigDecimal | ○ | 백분율 |
+| volumeHighList.code | String  | ○ | 코드 |
+| volumeHighList.codeName | String  | ○ | 코드명 |
+| volumeHighList.rank | Double  | ○ | 순위 |
+| volumeHighList.price | BigDecimal | ○ | 금액 |
+| volumeHighList.percent | BigDecimal  | ○ | 백분율 |
+
+응답 예시
+
+```json
+{
+"viewALotList":  [
+	{
+		"code": 005930,
+		"codeName":  삼성전자,
+		"rank":  1,
+		"price":  61500,
+		"percent":  0.00
+	},
+	{
+		"code": 373220,
+		"codeName":  LG에너지솔루션,
+		"rank":  2,
+		"price":  452000,
+		"percent":  0.00
+	}
+]
+}
+```
+
+### 순위 랜덤 변경 API
+---
+
+#### 요청
+
+| 항목 | 값             | 설명 |
+| ---- | -------------- | --- |
+| URL  | `POST` /api/randomRank|
+
+
+
+--
+
+#### 응답
+
+`응답 내용`
+
+| 이름 |  타입  | 필수 | 설명        |
+| ---- | :----: | :---: | ----------- |
+| code   | String |  ○   | 결과코드 |
+| message | String |  ○   | 결과내용 |
+
+`응답 예시`
+
+```
+{
+"code" : 000,
+"message" : success
+}
+```
+핵심 문제 해결 전략
+---
+### 주제별 랭킹 조회 API
+- 요구사항에는 없는 내용이지만 현재 상용 뿌리기 서비스에는 있는 뿌릴 인원수 최대값을 채팅방 사용자 수 - 1(본인) 보다 크지 않도록 구현. 불필요하게 뿌릴 인원수를 많이 설정하여 요청자 지갑으로 환불하는 로직을 호출해야하기 때문에 서비스 과부하 가능성 있기 때문(프론트에서 막아도 됨)
+- 뿌리기 토큰을 랜덤 3자리로 생성할 때 random() 대신randomAlphanumeric() 으로 생성하여 인코딩 오류 방지, 또한 DB 데이터와 중복 체크 필수, 또한 다른 곳에서도 사용할 확장성 고려하여 공통 함수로 분리
+- 중복될 경우나 내부 오류시 지정해놓은 횟수만큼 반복 생성하는데, 현재는 3회로 지정하였지만 추후 뿌릴 인원(count)에 맞춰서 유동적으로 가져가는 것도 고민중.
+
+### 순위 랜덤 변경 API
+- 돈이 오고가는 거래이므로 로직 중에 오류나면 생성한 레코드 롤백하는 @Transaction 어노테이션 사용
+- 뿌린 금액이 DB에 오름차순으로 저장되어 있기 때문에 뿌린 금액 받기 기능 호출시 한번 더 랜덤 정렬 시행하여 '랜덤'기능 충실
+
+### 데이터 모델링 관련
+- KP_TB_RAIN_MONEY의 FK를 KP_TB_ROOM_USER의 복합키로 할지, 각각의 PK로 할지 고민하다가 복합키로 결정하였으나 조회문이 복잡해지는 단점 생.
+- TOKEN 필드의 데이터크기를 3자리로 잡았는데, 추후 확장성을 고려해 더 넉넉하게 잡았어도 좋았겠다는 생각. 서비스가 확장되면 인원이 늘어나고 3자리수로 유니크한 문자가 한계가 있기 때문
+- PK Java에서는 Long인데 데이터 타입 Unsigned int로 할지, bigint로 할지 고민했다가 Java에서는 기본적으로 unsigned type을 지원하지 않아서 방법은 있겠으나 시간을 뺏길 것 같아서 bigint 사용
+
+### 총평
+원래 자바가 비효율적인 것 같아서 조금 싫어했는데, 이번 프로젝트를 계기로 자바도 효율적으로 쓸 수 있는 것들이 엄청 많구나라고 알게됨. boot, JPA/Hibernate, loombok, gradle, IntelliJ 등 을 통해서 이렇게 느꼈는데, 특히 JPA는 너무 좋았지만 파이썬의 ORM과 비교하면 그래도 해줘야할 게 많다. 이전에 썼던 Mybatis가 금융, SI기업에서 많이 쓰는 이유가 안정적이고 원래 쓰던거여서 라고 하던데, 안정화되면 빨리 도입했으면 좋겠다. 이번에 IntelliJ + gradle 조합을 쓰면서 너무 fancy 하다고 생각.
+언어에 대한 인식을 바꾸게 해준 너무 좋은 경험.
+
