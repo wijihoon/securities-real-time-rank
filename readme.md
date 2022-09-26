@@ -80,7 +80,7 @@ HTTP/1.1 400 Bad Request
 | Name |  Type  | Descrption |
 | ---- | ---- | ----------- |
 | code | String	 | 상품코드 |
-| codeNm | String	 | 상품코드몇 |
+| codeNm | String	 | 상품코드명|
 | rank | BigDecimal | 순위 |
 | price | BigDecimal  | 가격 |
 | percent | Double  | 백분율 |
@@ -164,7 +164,7 @@ Content-type: application/json;charset=UTF-8
 | Name |  Type  | Descrption |
 | ---- | ---- | ----------- |
 | code | String	 | 상품코드 |
-| codeNm | String	 | 상품코드몇 |
+| codeNm | String	 | 상품코드명 |
 | rank | BigDecimal | 순위 |
 | price | BigDecimal  | 가격 |
 | percent | Double  | 백분율 |
