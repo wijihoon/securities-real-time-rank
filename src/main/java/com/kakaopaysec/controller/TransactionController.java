@@ -59,7 +59,7 @@ public class TransactionController {
     public ResponseEntity<?> updateRandomRank(){
         try {
             rankRedisSevice.updateRandomRank();
-            return new ResponseEntity<>(exceptionMessage.errMsg("success", String.valueOf("000")), httpHeaders, HttpStatus.OK);
+            return new ResponseEntity<>(exceptionMessage.errMsg("success", String.valueOf("201")), httpHeaders, HttpStatus.OK);
         }catch (ServiceException se){
             logger.error(se.toString());
             return new ResponseEntity<>(exceptionMessage.errMsg(ErrCode.E0101.getErrMsg(), ErrCode.E0101.getCode()) ,httpHeaders,se.getERR_CODE());

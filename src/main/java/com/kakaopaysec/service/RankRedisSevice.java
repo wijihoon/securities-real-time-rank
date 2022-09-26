@@ -137,7 +137,10 @@ public class RankRedisSevice {
     							  , investAgentVolInfo.get().getSee().doubleValue());
     		//많이 오른, 많이 내린
     		zSetOps.add("volumeOfLot", listItemInfo.get(i).getCode()
-    								 , ohlcvInfo.get().getClose().doubleValue());
+    								 , ohlcvInfo.get().getClose()
+    								 	.subtract(ohlcvInfo.get().getOpen())
+										.divide(ohlcvInfo.get().getOpen(), 4, RoundingMode.FLOOR)
+										.multiply(new BigDecimal("100")).doubleValue());
     		//거래량 많은
     		zSetOps.add("volumeHigh", listItemInfo.get(i).getCode()
     								, investAgentVolInfo.get().getForeighVolume()
