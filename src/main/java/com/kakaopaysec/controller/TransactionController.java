@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1")
+@RequestMapping("/v1/stock")
 public class TransactionController {
 
     private static Logger logger = LoggerFactory.getLogger(TransactionController.class);
