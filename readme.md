@@ -67,9 +67,9 @@ spring-integration-jdbc, spring-boot-integration은 분산 락을 활용하여, 
 ### 3. Junit
 함수 및 메소드의 모듈이 의도한 대로 작동하는지 검증하기 위해 사용자
 
--- junit-jupiter-engine : 
--- assertj-core : 
--- mockito-junit-jupiter
+- junit-jupiter-engine : 
+- assertj-core : 
+- mockito-junit-jupiter
 
 ### 4. 그 외 
 
