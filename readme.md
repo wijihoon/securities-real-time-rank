@@ -185,7 +185,7 @@ HTTP/1.1 400 Bad Request
 #### Request
 
 ```json
-curl -v -X GET "http://localhost:8080/api/rank"
+curl -v -X GET "http://localhost:8080/v1/stock/rank"
 ```
 
 #### Response
@@ -380,7 +380,7 @@ Content-type: application/json;charset=UTF-8
 #### Request
 
 ```json
-curl -v -X GET "http://localhost:8080/api/rank/{id}"
+curl -v -X GET "http://localhost:8080/v1/stock/rank/{id}"
 ```
 
 #### Response
@@ -551,7 +551,7 @@ Content-type: application/json;charset=UTF-8
 #### Request
 
 ```json
-curl -v -X POST "http://localhost:8080/api/randomRank"
+curl -v -X POST "http://localhost:8080/v1/stock/random"
 ```
 
 #### Response
