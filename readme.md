@@ -1,6 +1,6 @@
 ## kakaopay securities real-time rank
 ---
-## 🏃‍♂️ 목차
+## 목차
 - [개발 환경](#개발-환경)
 - [ER 다이어그램](#ER-다이어그램)
 - [API 명세](#API-명세)
@@ -9,7 +9,7 @@
 
 ---
 
-## 🏃‍♂️ 개발 환경
+## 개발 환경
 * JDK 11
 * Spring Boot 2.5.3
 * STS-4-4.16.0.RELEASE
@@ -21,7 +21,7 @@
 
 ---
 
-## 🏃‍♂️ 개발 프레임워크
+## 개발 프레임워크
 
 - 개발 프레임워크 구성은 아래와 같으며, Maven 스크립트에 의해서 자동으로 로드 및 사용하도록 되어있음
 
@@ -54,7 +54,7 @@ Sample Csv 파일을 "csvReader"를 통해 읽어 효율적인 데이터 핸들�
 
 ---
 
-## 🏃‍♂️테이블 구성
+## ♂️테이블 구성
 
 <img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/76634761/192251282-60522fe2-dc9a-4757-89f4-74f079692ec4.jpg">
 
@@ -96,7 +96,7 @@ Sample Csv 파일을 "csvReader"를 통해 읽어 효율적인 데이터 핸들�
 
 ---
 
-## 🏃‍♂️ API 명세
+## API 명세
 
 ### HTTP 상태 코드
 
@@ -538,7 +538,7 @@ Content-type: application/json;charset=UTF-8
 }
 ```
 
-## 🏃‍♂️ 핵심 문제 해결 전략
+## 핵심 문제 해결 전략
 ---
 
 ### Application Loading 시 데이터 적재
