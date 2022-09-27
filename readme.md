@@ -574,64 +574,64 @@ Content-type: application/json;charset=UTF-8
 - Application이 정상적으로 구동되면 `H2 Database`내에 Sample Data를 적재하는 로직 구현
 
 ```java
-	@Bean
-    public CommandLineRunner commandLineRunner() {
-        return (args) -> {
-            try {
-            	Optional<InvestAgentVolInfo> investAgentVolInfo;
-            	CSVReader csvReader = new CSVReader(new FileReader("/kakaopaysec/src/main/resources/data/SampleData.csv"));
-            	String[] strArr;
-            	
-                while ((strArr = csvReader.readNext()) != null) {
-                	
-                	/**
-                	 * 종목정보 save
-                	 * 0 = code
-                	 * 1 = code_name
-                	 */
-                	itemRepository.save(new ItemInfo(strArr[1]
-                									, strArr[2]));
-                	
-                	/**
-                	 * 캔들정보 save
-                	 * 0 = code
-                	 * 1 = windowSize	(default = 1min)
-                	 * 2 = timestamp
-                	 * 3 = open 		(default = 초기 금액)
-                	 * 4 = close 		(default = 초기 금액)
-                	 */
-                	ohlcvRepository.save(new OhlcvInfo(strArr[1]
-            										, BigDecimal.ONE
-            										, LocalDateTime.now()
-        											, new BigDecimal(strArr[3])
-        											, new BigDecimal(strArr[3])));
-                	
-                	/**
-                	 * 거래주체별거래량 save
-                	 * 0 = code
-                	 * 1 = windowSize 		(default = 1min)
-                	 * 2 = timestamp
-                	 * 3 = foreighVolume 	(default = Random().nextInt(1000))
-                	 * 4 = istttVolume 		(default = Random().nextInt(1000))
-                	 * 5 = indiVolume 		(default = Random().nextInt(1000))
-                	 * 6 = see 				(default = Random().nextInt(1000))
-                	 */
-                	
-                	investAgentVolRepository.save(new InvestAgentVolInfo(strArr[1]
-                														, BigDecimal.ONE
-                														, LocalDateTime.now()
-            															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-            															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-            															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-            															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))));
-                	
-                }
-                
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        };
-    }
+@Bean
+public CommandLineRunner commandLineRunner() {
+	return (args) -> {
+	    try {
+		Optional<InvestAgentVolInfo> investAgentVolInfo;
+		CSVReader csvReader = new CSVReader(new FileReader("/kakaopaysec/src/main/resources/data/SampleData.csv"));
+		String[] strArr;
+
+		while ((strArr = csvReader.readNext()) != null) {
+
+			/**
+			 * 종목정보 save
+			 * 0 = code
+			 * 1 = code_name
+			 */
+			itemRepository.save(new ItemInfo(strArr[1]
+											, strArr[2]));
+
+			/**
+			 * 캔들정보 save
+			 * 0 = code
+			 * 1 = windowSize	(default = 1min)
+			 * 2 = timestamp
+			 * 3 = open 		(default = 초기 금액)
+			 * 4 = close 		(default = 초기 금액)
+			 */
+			ohlcvRepository.save(new OhlcvInfo(strArr[1]
+											, BigDecimal.ONE
+											, LocalDateTime.now()
+												, new BigDecimal(strArr[3])
+												, new BigDecimal(strArr[3])));
+
+			/**
+			 * 거래주체별거래량 save
+			 * 0 = code
+			 * 1 = windowSize 		(default = 1min)
+			 * 2 = timestamp
+			 * 3 = foreighVolume 	(default = Random().nextInt(1000))
+			 * 4 = istttVolume 		(default = Random().nextInt(1000))
+			 * 5 = indiVolume 		(default = Random().nextInt(1000))
+			 * 6 = see 				(default = Random().nextInt(1000))
+			 */
+
+			investAgentVolRepository.save(new InvestAgentVolInfo(strArr[1]
+																, BigDecimal.ONE
+																, LocalDateTime.now()
+																, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+																, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+																, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+																, new BigDecimal(Integer.toString(new Random().nextInt(1000)))));
+
+		}
+
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	};
+}
 ```
 
 ### 실시간 주식 Ranking 서비스 구축
@@ -639,85 +639,85 @@ Content-type: application/json;charset=UTF-8
 - 중복값의 제어와  O(log(N)) Select, 실시간 데이터 추가 및 변경을 고려한 Redis Sorted Set 자료구조 사용
 
 ```java
-	@Autowired
-	private RedisTemplate<String, String> redisTemplate;
-	private ZSetOperations<String, String> zSetOps;
-	
-	@Transactional
-	public void updateRandomRank() {
-		
-		List<ItemInfo> listItemInfo	= itemRepository.findAll();
-		Optional<InvestAgentVolInfo> investAgentVolInfo;
-		Optional<OhlcvInfo> ohlcvInfo;
-		
-    	for(int i = 0; i < listItemInfo.size(); i++) {
-    		
-    		ohlcvInfo = ohlcvRepository.findByCode(listItemInfo.get(i).getCode());
-    		
-    		/**
-        	 * 캔들정보 update
-        	 * 0 = code
-        	 * 1 = windowSize	(default = 1min)
-        	 * 2 = timestamp
-        	 * 3 = open
-        	 * 4 = close
-        	 */
-    		if(i%2 == 0) {
+@Autowired
+private RedisTemplate<String, String> redisTemplate;
+private ZSetOperations<String, String> zSetOps;
+
+@Transactional
+public void updateRandomRank() {
+
+	List<ItemInfo> listItemInfo	= itemRepository.findAll();
+	Optional<InvestAgentVolInfo> investAgentVolInfo;
+	Optional<OhlcvInfo> ohlcvInfo;
+
+	for(int i = 0; i < listItemInfo.size(); i++) {
+
+		ohlcvInfo = ohlcvRepository.findByCode(listItemInfo.get(i).getCode());
+
+		/**
+		 * 캔들정보 update
+		 * 0 = code
+		 * 1 = windowSize	(default = 1min)
+		 * 2 = timestamp
+		 * 3 = open
+		 * 4 = close
+		 */
+		if(i%2 == 0) {
 				ohlcvRepository.save(new OhlcvInfo(listItemInfo.get(i).getCode()
-					    						, BigDecimal.ONE
-					    						, LocalDateTime.now()
-					    						, ohlcvInfo.get().getOpen()
-					    						, ohlcvInfo.get().getClose().subtract(new BigDecimal(Integer.toString(new Random().nextInt(1000))))
-					    						));
-    		}else {
+											, BigDecimal.ONE
+											, LocalDateTime.now()
+											, ohlcvInfo.get().getOpen()
+											, ohlcvInfo.get().getClose().subtract(new BigDecimal(Integer.toString(new Random().nextInt(1000))))
+											));
+		}else {
 				ohlcvRepository.save(new OhlcvInfo(listItemInfo.get(i).getCode()
 													, BigDecimal.ONE
 													, LocalDateTime.now()
 													, ohlcvInfo.get().getOpen()
 													, ohlcvInfo.get().getClose().add(new BigDecimal(Integer.toString(new Random().nextInt(1000))))
-						    						));
-    		}
-    		
-    		ohlcvInfo = ohlcvRepository.findByCode(listItemInfo.get(i).getCode());
-    		
-    		/**
-        	 * 거래주체별거래량 update
-        	 * 0 = code
-        	 * 1 = windowSize 		(default = 1min)
-        	 * 2 = timestamp
-        	 * 3 = foreighVolume 	(default = Random().nextInt(10000))
-        	 * 4 = istttVolume 		(default = Random().nextInt(10000))
-        	 * 5 = indiVolume 		(default = Random().nextInt(10000))
-        	 * 6 = see 				(default = Random().nextInt(10000))
-        	 */
+												));
+		}
+
+		ohlcvInfo = ohlcvRepository.findByCode(listItemInfo.get(i).getCode());
+
+		/**
+		 * 거래주체별거래량 update
+		 * 0 = code
+		 * 1 = windowSize 		(default = 1min)
+		 * 2 = timestamp
+		 * 3 = foreighVolume 	(default = Random().nextInt(10000))
+		 * 4 = istttVolume 		(default = Random().nextInt(10000))
+		 * 5 = indiVolume 		(default = Random().nextInt(10000))
+		 * 6 = see 				(default = Random().nextInt(10000))
+		 */
 			investAgentVolRepository.save(new InvestAgentVolInfo(listItemInfo.get(i).getCode()
-					    										, BigDecimal.ONE
-					    										, LocalDateTime.now()
-				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+															, BigDecimal.ONE
+															, LocalDateTime.now()
+															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
 																));
-    		
-    		investAgentVolInfo = investAgentVolRepository.findByCode(listItemInfo.get(i).getCode());
-    		
-    		//많이 본
-    		zSetOps.add("viewALot", listItemInfo.get(i).getCode()
-    							  , investAgentVolInfo.get().getSee().doubleValue());
-    		//많이 오른, 많이 내린
-    		zSetOps.add("volumeOfLot", listItemInfo.get(i).getCode()
-    								 , ohlcvInfo.get().getClose()
-    								 	.subtract(ohlcvInfo.get().getOpen())
+
+		investAgentVolInfo = investAgentVolRepository.findByCode(listItemInfo.get(i).getCode());
+
+		//많이 본
+		zSetOps.add("viewALot", listItemInfo.get(i).getCode()
+							  , investAgentVolInfo.get().getSee().doubleValue());
+		//많이 오른, 많이 내린
+		zSetOps.add("volumeOfLot", listItemInfo.get(i).getCode()
+								 , ohlcvInfo.get().getClose()
+									.subtract(ohlcvInfo.get().getOpen())
 										.divide(ohlcvInfo.get().getOpen(), 4, RoundingMode.FLOOR)
 										.multiply(new BigDecimal("100")).doubleValue());
-    		//거래량 많은
-    		zSetOps.add("volumeHigh", listItemInfo.get(i).getCode()
-    								, investAgentVolInfo.get().getForeighVolume()
+		//거래량 많은
+		zSetOps.add("volumeHigh", listItemInfo.get(i).getCode()
+								, investAgentVolInfo.get().getForeighVolume()
 									.add(investAgentVolInfo.get().getIstttVolume())
 									.add(investAgentVolInfo.get().getIndiVolume())
 									.doubleValue());
-    	}
 	}
+}
 ```
 
 ### 모든 주제 랭킹 조회 API
