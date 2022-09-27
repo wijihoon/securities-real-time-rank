@@ -48,7 +48,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("모든 주제 순위 랜덤 변경 API 테스트(정상)")
     void update_institutions() {
-    	mockMvc.perform(post("/api/randomRank"))
+    	mockMvc.perform(post("/api/random"))
 		        .andDo(print())
 		        .andExpect(status().isOk())
 		        .andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -60,7 +60,7 @@ class TransactionControllerTest {
     @DisplayName("모든 주제 순위를 랜덤하게 변경한다.(실패)")
     void addAccountsfail() throws Exception {
     	
-    	mockMvc.perform(post("/api/randomRank"))
+    	mockMvc.perform(post("/api/random"))
 		        .andDo(print()).andExpect(status().is5xxServerError())
 		        .andExpect(handler().handlerType(AccountController.class))
 		        .andExpect(handler().methodName("add"))
