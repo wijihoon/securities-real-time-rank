@@ -5,12 +5,26 @@ package com.kakaopaysec;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Random;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+
+import com.kakaopaysec.entity.InvestAgentVolInfo;
+import com.kakaopaysec.entity.ItemInfo;
+import com.kakaopaysec.entity.OhlcvInfo;
+import com.opencsv.CSVReader;
 
 /**
  * @author wijihoon
