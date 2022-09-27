@@ -380,7 +380,7 @@ Content-type: application/json;charset=UTF-8
 #### Request
 
 ```json
-curl -v -X GET "http://localhost:8080/v1/stock/rank/{id}"
+curl -v -X GET "http://localhost:8080/v1/stock/rank/1"
 ```
 
 #### Response
