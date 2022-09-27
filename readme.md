@@ -574,64 +574,64 @@ Content-type: application/json;charset=UTF-8
 - Application이 정상적으로 구동되면 `H2 Database`내에 Sample Data를 적재하는 로직 구현
 
 ```java
-@Bean
-public CommandLineRunner commandLineRunner() {
-	return (args) -> {
-	    try {
-		Optional<InvestAgentVolInfo> investAgentVolInfo;
-		CSVReader csvReader = new CSVReader(new FileReader("/kakaopaysec/src/main/resources/data/SampleData.csv"));
-		String[] strArr;
-
-		while ((strArr = csvReader.readNext()) != null) {
-
-			/**
-			 * 종목정보 save
-			 * 0 = code
-			 * 1 = code_name
-			 */
-			itemRepository.save(new ItemInfo(strArr[1]
-											, strArr[2]));
-
-			/**
-			 * 캔들정보 save
-			 * 0 = code
-			 * 1 = windowSize	(default = 1min)
-			 * 2 = timestamp
-			 * 3 = open 		(default = 초기 금액)
-			 * 4 = close 		(default = 초기 금액)
-			 */
-			ohlcvRepository.save(new OhlcvInfo(strArr[1]
-											, BigDecimal.ONE
-											, LocalDateTime.now()
-												, new BigDecimal(strArr[3])
-												, new BigDecimal(strArr[3])));
-
-			/**
-			 * 거래주체별거래량 save
-			 * 0 = code
-			 * 1 = windowSize 		(default = 1min)
-			 * 2 = timestamp
-			 * 3 = foreighVolume 	(default = Random().nextInt(1000))
-			 * 4 = istttVolume 		(default = Random().nextInt(1000))
-			 * 5 = indiVolume 		(default = Random().nextInt(1000))
-			 * 6 = see 				(default = Random().nextInt(1000))
-			 */
-
-			investAgentVolRepository.save(new InvestAgentVolInfo(strArr[1]
-																, BigDecimal.ONE
-																, LocalDateTime.now()
-																, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-																, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-																, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-																, new BigDecimal(Integer.toString(new Random().nextInt(1000)))));
-
-		}
-
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    }
-	};
-}
+	@Bean
+    public CommandLineRunner commandLineRunner() {
+        return (args) -> {
+            try {
+            	Optional<InvestAgentVolInfo> investAgentVolInfo;
+            	CSVReader csvReader = new CSVReader(new FileReader("/kakaopaysec/src/main/resources/data/SampleData.csv"));
+            	String[] strArr;
+            	
+                while ((strArr = csvReader.readNext()) != null) {
+                	
+                	/**
+                	 * 종목정보 save
+                	 * 0 = code
+                	 * 1 = code_name
+                	 */
+                	itemRepository.save(new ItemInfo(strArr[1]
+                									, strArr[2]));
+                	
+                	/**
+                	 * 캔들정보 save
+                	 * 0 = code
+                	 * 1 = windowSize	(default = 1min)
+                	 * 2 = timestamp
+                	 * 3 = open 		(default = 초기 금액)
+                	 * 4 = close 		(default = 초기 금액)
+                	 */
+                	ohlcvRepository.save(new OhlcvInfo(strArr[1]
+            										, BigDecimal.ONE
+            										, LocalDateTime.now()
+        											, new BigDecimal(strArr[3])
+        											, new BigDecimal(strArr[3])));
+                	
+                	/**
+                	 * 거래주체별거래량 save
+                	 * 0 = code
+                	 * 1 = windowSize 		(default = 1min)
+                	 * 2 = timestamp
+                	 * 3 = foreighVolume 	(default = Random().nextInt(1000))
+                	 * 4 = istttVolume 		(default = Random().nextInt(1000))
+                	 * 5 = indiVolume 		(default = Random().nextInt(1000))
+                	 * 6 = see 				(default = Random().nextInt(1000))
+                	 */
+                	
+                	investAgentVolRepository.save(new InvestAgentVolInfo(strArr[1]
+                														, BigDecimal.ONE
+                														, LocalDateTime.now()
+            															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+            															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+            															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+            															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))));
+                	
+                }
+                
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+    }
 ```
 
 ### 실시간 주식 Ranking 서비스 구축
@@ -639,91 +639,108 @@ public CommandLineRunner commandLineRunner() {
 - 중복값의 제어와  O(log(N)) Select, 실시간 데이터 추가 및 변경을 고려한 Redis Sorted Set 자료구조 사용
 
 ```java
-@Autowired
-private RedisTemplate<String, String> redisTemplate;
-private ZSetOperations<String, String> zSetOps;
-
-@Transactional
-public void updateRandomRank() {
-
-	List<ItemInfo> listItemInfo	= itemRepository.findAll();
-	Optional<InvestAgentVolInfo> investAgentVolInfo;
-	Optional<OhlcvInfo> ohlcvInfo;
-
-	for(int i = 0; i < listItemInfo.size(); i++) {
-
-		ohlcvInfo = ohlcvRepository.findByCode(listItemInfo.get(i).getCode());
-
-		/**
-		 * 캔들정보 update
-		 * 0 = code
-		 * 1 = windowSize	(default = 1min)
-		 * 2 = timestamp
-		 * 3 = open
-		 * 4 = close
-		 */
-		if(i%2 == 0) {
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
+	private ZSetOperations<String, String> zSetOps;
+	
+	@Transactional
+	public void updateRandomRank() {
+		
+		List<ItemInfo> listItemInfo	= itemRepository.findAll();
+		Optional<InvestAgentVolInfo> investAgentVolInfo;
+		Optional<OhlcvInfo> ohlcvInfo;
+		
+    	for(int i = 0; i < listItemInfo.size(); i++) {
+    		
+    		ohlcvInfo = ohlcvRepository.findByCode(listItemInfo.get(i).getCode());
+    		
+    		/**
+        	 * 캔들정보 update
+        	 * 0 = code
+        	 * 1 = windowSize	(default = 1min)
+        	 * 2 = timestamp
+        	 * 3 = open
+        	 * 4 = close
+        	 */
+    		if(i%2 == 0) {
 				ohlcvRepository.save(new OhlcvInfo(listItemInfo.get(i).getCode()
-											, BigDecimal.ONE
-											, LocalDateTime.now()
-											, ohlcvInfo.get().getOpen()
-											, ohlcvInfo.get().getClose().subtract(new BigDecimal(Integer.toString(new Random().nextInt(1000))))
-											));
-		}else {
+					    						, BigDecimal.ONE
+					    						, LocalDateTime.now()
+					    						, ohlcvInfo.get().getOpen()
+					    						, ohlcvInfo.get().getClose().subtract(new BigDecimal(Integer.toString(new Random().nextInt(1000))))
+					    						));
+    		}else {
 				ohlcvRepository.save(new OhlcvInfo(listItemInfo.get(i).getCode()
 													, BigDecimal.ONE
 													, LocalDateTime.now()
 													, ohlcvInfo.get().getOpen()
 													, ohlcvInfo.get().getClose().add(new BigDecimal(Integer.toString(new Random().nextInt(1000))))
-												));
-		}
-
-		ohlcvInfo = ohlcvRepository.findByCode(listItemInfo.get(i).getCode());
-
-		/**
-		 * 거래주체별거래량 update
-		 * 0 = code
-		 * 1 = windowSize 		(default = 1min)
-		 * 2 = timestamp
-		 * 3 = foreighVolume 	(default = Random().nextInt(10000))
-		 * 4 = istttVolume 		(default = Random().nextInt(10000))
-		 * 5 = indiVolume 		(default = Random().nextInt(10000))
-		 * 6 = see 				(default = Random().nextInt(10000))
-		 */
+						    						));
+    		}
+    		
+    		ohlcvInfo = ohlcvRepository.findByCode(listItemInfo.get(i).getCode());
+    		
+    		/**
+        	 * 거래주체별거래량 update
+        	 * 0 = code
+        	 * 1 = windowSize 		(default = 1min)
+        	 * 2 = timestamp
+        	 * 3 = foreighVolume 	(default = Random().nextInt(10000))
+        	 * 4 = istttVolume 		(default = Random().nextInt(10000))
+        	 * 5 = indiVolume 		(default = Random().nextInt(10000))
+        	 * 6 = see 				(default = Random().nextInt(10000))
+        	 */
 			investAgentVolRepository.save(new InvestAgentVolInfo(listItemInfo.get(i).getCode()
-															, BigDecimal.ONE
-															, LocalDateTime.now()
-															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-															, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+					    										, BigDecimal.ONE
+					    										, LocalDateTime.now()
+				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
 																));
-
-		investAgentVolInfo = investAgentVolRepository.findByCode(listItemInfo.get(i).getCode());
-
-		//많이 본
-		zSetOps.add("viewALot", listItemInfo.get(i).getCode()
-							  , investAgentVolInfo.get().getSee().doubleValue());
-		//많이 오른, 많이 내린
-		zSetOps.add("volumeOfLot", listItemInfo.get(i).getCode()
-								 , ohlcvInfo.get().getClose()
-									.subtract(ohlcvInfo.get().getOpen())
+    		
+    		investAgentVolInfo = investAgentVolRepository.findByCode(listItemInfo.get(i).getCode());
+    		
+    		//많이 본
+    		zSetOps.add("viewALot", listItemInfo.get(i).getCode()
+    							  , investAgentVolInfo.get().getSee().doubleValue());
+    		//많이 오른, 많이 내린
+    		zSetOps.add("volumeOfLot", listItemInfo.get(i).getCode()
+    								 , ohlcvInfo.get().getClose()
+    								 	.subtract(ohlcvInfo.get().getOpen())
 										.divide(ohlcvInfo.get().getOpen(), 4, RoundingMode.FLOOR)
 										.multiply(new BigDecimal("100")).doubleValue());
-		//거래량 많은
-		zSetOps.add("volumeHigh", listItemInfo.get(i).getCode()
-								, investAgentVolInfo.get().getForeighVolume()
+    		//거래량 많은
+    		zSetOps.add("volumeHigh", listItemInfo.get(i).getCode()
+    								, investAgentVolInfo.get().getForeighVolume()
 									.add(investAgentVolInfo.get().getIstttVolume())
 									.add(investAgentVolInfo.get().getIndiVolume())
 									.doubleValue());
+    	}
 	}
-}
 ```
 
-### 모든 주제 랭킹 조회 API
-- 
-- 뿌리기 토큰을 랜덤 3자리로 생성할 때 random() 대신randomAlphanumeric() 으로 생성하여 인코딩 오류 방지, 또한 DB 데이터와 중복 체크 필수, 또한 다른 곳에서도 사용할 확장성 고려하여 공통 함수로 분리
-- 중복될 경우나 내부 오류시 지정해놓은 횟수만큼 반복 생성하는데, 현재는 3회로 지정하였지만 추후 뿌릴 인원(count)에 맞춰서 유동적으로 가져가는 것도 고민중.
+### 대용량 데이터 처리를 위한 테이블 구조
+- `invest_agent_vol`, `ohlcv` 거래성 테이블의 대용량 처리를 위해 Partition Range 생성
+
+```mysql
+create table `invest_agent_vol`
+(timestamp datatime not null,
+code char(32) not null,
+window_size int,
+foreigh_volume int,
+isttt_volume int,
+indi_volume int,
+see int,
+primary key (timestamp, code)
+) engine=innodb default charset=utf8mb4
+partition by range(date_format(DATETIME,'%Y%m%d%H')) (
+partition p0 values less than(2022092709) engine=innodb,
+partition p1 values less than(2022092710) engine=innodb,
+partition p2 values less than(2022092711) engine=innodb,
+partition p3 values less than(2022092712) engine=innodb,
+partition p999 values less than maxvalue engine=innodb);
+```
 
 ### 주제별 랭킹 조회 API
 - 요구사항에는 없는 내용이지만 현재 상용 뿌리기 서비스에는 있는 뿌릴 인원수 최대값을 채팅방 사용자 수 - 1(본인) 보다 크지 않도록 구현. 불필요하게 뿌릴 인원수를 많이 설정하여 요청자 지갑으로 환불하는 로직을 호출해야하기 때문에 서비스 과부하 가능성 있기 때문(프론트에서 막아도 됨)
