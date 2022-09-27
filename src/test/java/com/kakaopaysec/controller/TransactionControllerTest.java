@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.kakaopaysec.controller;
 
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -48,11 +45,8 @@ class TransactionControllerTest {
 		                .build();
     }
 
-    /*
-	 * 모든 주제 순위 랜덤 변경 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("모든 주제 순위를 랜덤하게 변경한다.")
+    @DisplayName("모든 주제 순위 랜덤 변경 API 테스트(정상)")
     void update_institutions() {
     	mockMvc.perform(post("/api/randomRank"))
 		        .andDo(print())
@@ -62,11 +56,20 @@ class TransactionControllerTest {
 		        .andReturn();
     }
     
-    /*
-	 * 모든 주제 Top5 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("모든 주제 Top5를 조회한다.")
+    @DisplayName("모든 주제 순위를 랜덤하게 변경한다.(실패)")
+    void addAccountsfail() throws Exception {
+    	
+    	mockMvc.perform(post("/api/randomRank"))
+		        .andDo(print()).andExpect(status().is5xxServerError())
+		        .andExpect(handler().handlerType(AccountController.class))
+		        .andExpect(handler().methodName("add"))
+		        .andExpect(jsonPath("$.success", is(false)))
+		        .andExpect(jsonPath("$.error").exists());
+    }
+    
+    @Test
+    @DisplayName("모든 주제 Top5 조회 API 테스트(정상)")
     void search_all_top5_topics() {
     	mockMvc.perform(get("/api/rank"))
 		        .andDo(print())
@@ -76,119 +79,96 @@ class TransactionControllerTest {
 		        .andReturn();
     }
     
-    /*
-	 * 많이 본 주식 Top20 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("많이 본 주식 Top20을 조회한다.")
-    void search_view_top20_topics(get("/api/rank/0"))
-    	.andDo(print())
-    	.andExpect(status().isOk())
-    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-        .andDo(print())
-    	.andReturn();
+    @DisplayName("많이 본 주식 Top20 조회 API 테스트(정상)")
+    void search_view_top20_topics() {
+    	mockMvc.perform(get("/api/rank/0"))
+		    	.andDo(print())
+		    	.andExpect(status().isOk())
+		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+		        .andDo(print())
+		    	.andReturn();
     }
     
-	/*
-	 * 많이 본 주식 Top100 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("많이 본 주식 Top100을 조회한다.")
+    @DisplayName("많이 본 주식 Top100 조회 API 테스트(정상)")
     void search_view_top100_topics() {
     	mockMvc.perform(get("/api/rank/0"))
-    	.param("paging", 100))
-    	.andDo(print())
-    	.andExpect(status().isOk())
-    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-        .andDo(print())
-    	.andReturn();
+		    	.param("paging", 100))
+		    	.andDo(print())
+		    	.andExpect(status().isOk())
+		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+		        .andDo(print())
+		    	.andReturn();
     }
     
-    /*
-	 * 많이 오른 주식 Top20 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("많이 오른 주식 Top20을 조회한다.")
+    @DisplayName("많이 오른 주식 Top20 조회 API 테스트(정상)")
     void search_rise_top20_topics() {
     	mockMvc.perform(get("/api/rank/1"))
-    	.andDo(print())
-    	.andExpect(status().isOk())
-    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-        .andDo(print())
-    	.andReturn();
+		    	.andDo(print())
+		    	.andExpect(status().isOk())
+		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+		        .andDo(print())
+		    	.andReturn();
     }
     
-    /*
-	 * 많이 오른 주식 Top100 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("많이 오른 주식 Top100을 조회한다.")
+    @DisplayName("많이 오른 주식 Top100 조회 API 테스트(정상)")
     void search_rise_top100_topics() {
     	mockMvc.perform(get("/api/rank/1"))
-    	.param("paging", 100))
-		.andDo(print())
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-        .andDo(print())
-		.andReturn();
+		    	.param("paging", 100))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+		        .andDo(print())
+				.andReturn();
     }
     
-    /*
-	 * 많이 내린 주식 Top20 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("많이 내린 주식 Top20을 조회한다.")
+    @DisplayName("많이 내린 주식 Top20 조회 API 테스트(정상)")
     void search_drop_top20_topics() {
     	mockMvc.perform(get("/api/rank/2"))
-    	.andDo(print())
-    	.andExpect(status().isOk())
-    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-        .andDo(print())
-    	.andReturn();
+		    	.andDo(print())
+		    	.andExpect(status().isOk())
+		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+		        .andDo(print())
+		    	.andReturn();
     }
     
-    /*
-	 * 많이 내린 주식 Top100 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("많이 내린 주식 Top100을 조회한다.")
+    @DisplayName("많이 내린 주식 Top100 조회 API 테스트(정상)")
     void search_drop_top100_topics() {
     	mockMvc.perform(get("/api/rank/2"))
-    	.param("paging", 100))
-		.andDo(print())
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-        .andDo(print())
-		.andReturn();
+		    	.param("paging", 100))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+		        .andDo(print())
+				.andReturn();
     }
     
-    /*
-	 * 많이 보유한 주식 Top20 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("많이 보유한 주식 Top20을 조회한다.")
+    @DisplayName("많이 보유한 주식 Top20 조회 API 테스트(정상)")
     void search_volume_top20_topics() {
     	mockMvc.perform(get("/api/rank/3"))
-    	.andDo(print())
-    	.andExpect(status().isOk())
-    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-        .andDo(print())
-    	.andReturn();
+		    	.andDo(print())
+		    	.andExpect(status().isOk())
+		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+		        .andDo(print())
+		    	.andReturn();
     }
     
-    /*
-	 * 많이 보유한 주식 Top100 조회 API 테스트(정상)
-	 */
     @Test
-    @DisplayName("많이 보유한 주식 Top100을 조회한다.")
+    @DisplayName("많이 보유한 주식 Top100 조회 API 테스트(정상)")
     void search_volume_top100_topics() {
     	mockMvc.perform(get("/api/rank/3"))
-    	.param("paging", 100))
-		.andDo(print())
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(APPLICATION_JSON_UTF8))
-        .andDo(print())
-		.andReturn();
+		    	.param("paging", 100))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(APPLICATION_JSON_UTF8))
+		        .andDo(print())
+				.andReturn();
     }
 
 }
