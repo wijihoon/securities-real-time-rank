@@ -14,15 +14,15 @@ public enum ErrCode {
     E0104("104", "헤더 정보 확인부탁드립니다.");
 
 
-    public final String code;
+    public final int code;
     public final String errMsg;
 
-    ErrCode(String code, String errMsg){
+    ErrCode(int code, String errMsg){
         this.code = code;
         this.errMsg = errMsg;
     }
 
-    public String getCode(){
+    public int getCode(){
         return code;
     }
 
