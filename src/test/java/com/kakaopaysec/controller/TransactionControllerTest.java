@@ -48,7 +48,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("모든 주제 순위 랜덤 변경 API 테스트(정상)")
     void update_institutions() {
-    	mockMvc.perform(post("/v1/random"))
+    	mockMvc.perform(post("/v1/stock/random"))
 		        .andDo(print())
 		        .andExpect(status().isOk())
 		        .andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -60,7 +60,7 @@ class TransactionControllerTest {
     @DisplayName("모든 주제 순위를 랜덤하게 변경한다.(실패)")
     void addAccountsfail() throws Exception {
     	
-    	mockMvc.perform(post("/v1/random"))
+    	mockMvc.perform(post("/v1/stock/random"))
 		        .andDo(print()).andExpect(status().is5xxServerError())
 		        .andExpect(handler().handlerType(AccountController.class))
 		        .andExpect(handler().methodName("add"))
@@ -71,7 +71,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("모든 주제 Top5 조회 API 테스트(정상)")
     void search_all_top5_topics() {
-    	mockMvc.perform(get("/v1/rank"))
+    	mockMvc.perform(get("/v1/stock/rank"))
 		        .andDo(print())
 		        .andExpect(status().isOk())
 		        .andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -82,7 +82,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("많이 본 주식 Top20 조회 API 테스트(정상)")
     void search_view_top20_topics() {
-    	mockMvc.perform(get("/api/rank/0"))
+    	mockMvc.perform(get("/v1/stock/rank/0"))
 		    	.andDo(print())
 		    	.andExpect(status().isOk())
 		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -93,7 +93,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("많이 본 주식 Top100 조회 API 테스트(정상)")
     void search_view_top100_topics() {
-    	mockMvc.perform(get("/v1/rank/0"))
+    	mockMvc.perform(get("/v1/stock/rank/0"))
 		    	.param("paging", 100))
 		    	.andDo(print())
 		    	.andExpect(status().isOk())
@@ -105,7 +105,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("많이 오른 주식 Top20 조회 API 테스트(정상)")
     void search_rise_top20_topics() {
-    	mockMvc.perform(get("/v1/rank/1"))
+    	mockMvc.perform(get("/v1/stock/rank/1"))
 		    	.andDo(print())
 		    	.andExpect(status().isOk())
 		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -116,7 +116,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("많이 오른 주식 Top100 조회 API 테스트(정상)")
     void search_rise_top100_topics() {
-    	mockMvc.perform(get("/v1/rank/1"))
+    	mockMvc.perform(get("/v1/stock/rank/1"))
 		    	.param("paging", 100))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -128,7 +128,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("많이 내린 주식 Top20 조회 API 테스트(정상)")
     void search_drop_top20_topics() {
-    	mockMvc.perform(get("/v1/rank/2"))
+    	mockMvc.perform(get("/v1/stock/rank/2"))
 		    	.andDo(print())
 		    	.andExpect(status().isOk())
 		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -139,7 +139,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("많이 내린 주식 Top100 조회 API 테스트(정상)")
     void search_drop_top100_topics() {
-    	mockMvc.perform(get("/v1/rank/2"))
+    	mockMvc.perform(get("/v1/stock/rank/2"))
 		    	.param("paging", 100))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -151,7 +151,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("많이 보유한 주식 Top20 조회 API 테스트(정상)")
     void search_volume_top20_topics() {
-    	mockMvc.perform(get("/v1/rank/3"))
+    	mockMvc.perform(get("/v1/stock/rank/3"))
 		    	.andDo(print())
 		    	.andExpect(status().isOk())
 		    	.andExpect(content().contentType(APPLICATION_JSON_UTF8))
@@ -162,7 +162,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("많이 보유한 주식 Top100 조회 API 테스트(정상)")
     void search_volume_top100_topics() {
-    	mockMvc.perform(get("/v1/rank/3"))
+    	mockMvc.perform(get("/v1/stock/rank/3"))
 		    	.param("paging", 100))
 				.andDo(print())
 				.andExpect(status().isOk())
