@@ -540,7 +540,7 @@ Content-type: application/json;charset=UTF-8
 ## 단위 테스트
 단위 테스트는 "/kakaopaysec/src/test/java/com/kakaopaysec/controller" 폴더 아래에 있는 파일들을 실행 
 
-<img width="924" alt="kakaopay_server_junit" src="[https://user-images.githubusercontent.com/76634761/192251282-60522fe2-dc9a-4757-89f4-74f079692ec4.jpg](https://user-images.githubusercontent.com/76634761/192524751-0e713535-f5b3-4d73-bd6b-043bdf0b2f05.png)">
+<img width="924" alt="kakaopay_server_junit" src="https://user-images.githubusercontent.com/76634761/192251282-60522fe2-dc9a-4757-89f4-74f079692ec4.jpg">
 ---
 
 ## 핵심 문제 해결 전략
