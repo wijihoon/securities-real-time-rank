@@ -54,7 +54,7 @@ Sample Csv 파일을 "csvReader"를 통해 읽어 효율적인 데이터 핸들�
 
 ## ♂️테이블 구성
 
-<img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/76634761/192251282-60522fe2-dc9a-4757-89f4-74f079692ec4.jpg">
+<img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/76634761/192529288-bfbc7a78-fb67-466c-b3b3-f777b5171457.png">
 
 ### 1. item
 - Sample Data내 존재하는 주식 상품 정보 저장
