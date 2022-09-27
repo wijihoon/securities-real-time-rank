@@ -49,8 +49,78 @@
 
 ---
 
-## 🏃‍♂️ ER 다이어그램
+## 🏃‍♂️ 개발 프레임워크
+
+- 개발 프레임워크 구성은 아래와 같으며, Maven 스크립트에 의해서 자동으로 로드 및 사용하도록 되어있음
+
+### 1. Database
+- h2database : 1.4.199
+- redis      : 
+
+### 2. Spring Boot & Spring
+Restful 서버 구성 및 DB 엔티티 관리에 사용
+spring-integration-jdbc, spring-boot-integration은 분산 락을 활용하여, 특정 카드 또는 결제 ID의 동시 접근을 막는데 사용
+
+- spring-boot-starter-test : 2.1.4.RELEASE
+- spring-boot-data-jpa: 2.1.4.RELEASE
+
+### 3. Junit
+함수 및 메소드의 모듈이 의도한 대로 작동하는지 검증하기 위해 사용자
+
+-- junit-jupiter-engine : 
+-- assertj-core : 
+-- mockito-junit-jupiter
+
+### 4. 그 외 
+
+* Lombok : 1.18.6<br/>
+개발 편의를 위해 사용, Annotation Processor를 활용한 자동 Getter, Setter 기능 및 Builder 생성 시에 사용.<br/>
+IDE 에서 사용해야 하는 경우에 Project setting 내에 Enable annotation processing 옵션을 켜고 사용 해야 함.
+
+- opencsv : 3.7 <br/>
+Sample Csv 파일을 "csvReader"를 통해 읽어 효율적인 데이터 핸들링을 위함
+
+---
+
+## 🏃‍♂️테이블 구성
+
 <img width="924" alt="kakaopay_server_ERD" src="https://user-images.githubusercontent.com/76634761/192251282-60522fe2-dc9a-4757-89f4-74f079692ec4.jpg">
+
+### 1. item
+Sample Data내 존재하는 주식 상품 정보 저장<br/>
+원장성 테이블로 주식 랭킹 프로세스에 주체가 되는 테이블 개발내 invest_agent_vol, ohlcv의 자식 테이블을 가지게 된다.<br/>
+추후 이력 테이블 필요
+
+| 컬럼ID | 컬럼명 | type | len | PK |
+| -------- | -----------|---------- |
+| code |주식 코드| char | 32 |1|
+| code_name |주식 코드명| char  | 128| |
+
+### 2. invest_agent_vol
+거래성 테이블로 등록만 가능한 테이블 저장한 데이터를 정정하거나 취소하는 등의 행위는 Insert를 통해 상태 관리 해야함. 따라서 별도의 이력 테이블은 존재하지 않는다.<br/>
+파티션 테이블로 거래 일시 기준으로 파티션을 나눠 관리
+
+| 컬럼ID | 컬럼명 | type | len | PK |
+| -------- | -----------|---------- |
+| timestamp |거래 일시| datatime |  |1|
+| code |주식 코드| char  | 32| 2|
+| window_size |주기| int  | | |
+| foreigh_volume |외국인 보유량| int  | | |
+| isttt_volume |기관 보유량| int  | | |
+| indi_volume |개인 보유량| int  | | |
+| see |본 횟수| int  | | |
+
+### 3. ohlcv
+거래성 테이블로 등록만 가능한 테이블 저장한 데이터를 정정하거나 취소하는 등의 행위는 Insert를 통해 상태 관리 해야함. 따라서 별도의 이력 테이블은 존재하지 않는다.<br/>
+파티션 테이블로 거래 일시 기준으로 파티션을 나눠 관리
+
+| 컬럼ID | 컬럼명 | type | len | PK |
+| -------- | -----------|---------- |
+| timestamp |거래 일시| datatime |  |1|
+| code |주식 코드| char  | 32| 2|
+| window_size |주기| int  | | |
+| open |오픈가격| int  | | |
+| close |종료가격| int  | | |
 
 ---
 
