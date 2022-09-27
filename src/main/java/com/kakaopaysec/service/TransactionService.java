@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
@@ -36,16 +37,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TransactionService {
 
-public static final String[] KEY = { "viewALot", "riseALot", "dropALot", "volumeHigh" };
+	public static final String[] KEY = { "viewALot", "riseALot", "dropALot", "volumeHigh" };
 	
 	private static Logger logger = LoggerFactory.getLogger(TransactionController.class);
-	
+	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
 	private ZSetOperations<String, String> zSetOps;
+	@Autowired
 	private ItemRepository itemRepository;
+	@Autowired
 	private OhlcvRepository ohlcvRepository;
+	@Autowired
 	private InvestAgentVolRepository investAgentVolRepository;
-	
+
 	@PostConstruct
 	public void init() {
 		zSetOps = redisTemplate.opsForZSet();
@@ -108,7 +112,7 @@ public static final String[] KEY = { "viewALot", "riseALot", "dropALot", "volume
 			String str	= "";
 			Double i	= (double) 0;
 			
-			Optional<OhlcvInfo> ohlcvInfo;
+			Optional<OhlcvInfo> ohlcvInfo = null;
 			
 			while (iter.hasNext()) {
 				str = iter.next();

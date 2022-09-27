@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@RestControllerAdvice
 public class ResponseSender {
     public ResponseEntity<Object> send(int code, Object body) {
         HashMap<String, Object> response = new HashMap<String, Object>();

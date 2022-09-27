@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kakaopaysec.constent.ErrCode;
-import com.kakaopaysec.service.TransactionService;
 import com.kakaopaysec.util.ResponseSender;
+import com.kakaopaysec.service.TransactionService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +26,6 @@ public class TransactionController {
 
     private static Logger logger = LoggerFactory.getLogger(TransactionController.class);
     private final TransactionService transactionService;
-    private final ResponseSender responseSender;
 
     /**
 	 * Desc : 주제별 랭킹 조회 API, 모든 주제 랭킹 조회 API
@@ -39,6 +38,7 @@ public class TransactionController {
     public ResponseEntity<Object> searchRankList(@PathVariable(required = false) Integer id, @RequestParam(required = false) Integer paging){
         
     	Map<String, Object> rankList;
+    	ResponseSender responseSender = new ResponseSender();
     	
         if((id != null && id > 3)) {
         	//순위 조회 시 주제를 선택해주세요.
@@ -68,6 +68,7 @@ public class TransactionController {
 	 */
     @PostMapping(value = {"/random"})
     public ResponseEntity<Object> updateRandomRank(){
+    	ResponseSender responseSender = new ResponseSender();
         try {
         	transactionService.updateRandomRank();
             return responseSender.send(201, "success");
