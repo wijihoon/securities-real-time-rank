@@ -164,154 +164,158 @@ curl -v -X GET "http://localhost:8080/v1/stock/rank"
 HTTP/1.1 200 OK
 Content-type: application/json;charset=UTF-8
 {
-    "dropALot": [
-        {
-            "code": "010140",
-            "codeName": "삼성중공업",
-            "rank": 1.0,
-            "price": 5063.00,
-            "percent": -15.4800
-        },
-        {
-            "code": "003410",
-            "codeName": "쌍용C&E",
-            "rank": 2.0,
-            "price": 6218.00,
-            "percent": -11.5600
-        },
-        {
-            "code": "006800",
-            "codeName": "미래에셋증권",
-            "rank": 3.0,
-            "price": 6169.00,
-            "percent": -8.3400
-        },
-        {
-            "code": "024110",
-            "codeName": "기업은행",
-            "rank": 4.0,
-            "price": 9006.00,
-            "percent": -7.0600
-        },
-        {
-            "code": "034220",
-            "codeName": "LG디스플레이",
-            "rank": 5.0,
-            "price": 15524.00,
-            "percent": -4.4700
-        }
-    ],
-    "riseALot": [
-        {
-            "code": "008560",
-            "codeName": "메리츠증권",
-            "rank": 1.0,
-            "price": 5614.00,
-            "percent": 13.8700
-        },
-        {
-            "code": "028670",
-            "codeName": "팬오션",
-            "rank": 2.0,
-            "price": 6179.00,
-            "percent": 11.9300
-        },
-        {
-            "code": "018880",
-            "codeName": "한온시스템",
-            "rank": 3.0,
-            "price": 11192.00,
-            "percent": 5.5800
-        },
-        {
-            "code": "316140",
-            "codeName": "우리금융지주",
-            "rank": 4.0,
-            "price": 12723.00,
-            "percent": 4.2800
-        },
-        {
-            "code": "015760",
-            "codeName": "한국전력",
-            "rank": 5.0,
-            "price": 22295.00,
-            "percent": 3.4500
-        }
-    ],
-    "viewALot": [
-        {
-            "code": "007070",
-            "codeName": "GS리테일",
-            "rank": 1.0,
-            "price": 24854.00,
-            "percent": -2.9200
-        },
-        {
-            "code": "259960",
-            "codeName": "크래프톤",
-            "rank": 2.0,
-            "price": 257137.00,
-            "percent": -0.3400
-        },
-        {
-            "code": "017670",
-            "codeName": "SK텔레콤",
-            "rank": 3.0,
-            "price": 51944.00,
-            "percent": 1.4500
-        },
-        {
-            "code": "096770",
-            "codeName": "SK이노베이션",
-            "rank": 4.0,
-            "price": 209936.00,
-            "percent": -0.2700
-        },
-        {
-            "code": "047810",
-            "codeName": "한국항공우주",
-            "rank": 5.0,
-            "price": 56536.00,
-            "percent": 0.7700
-        }
-    ],
-    "volumeHigh": [
-        {
-            "code": "055550",
-            "codeName": "신한지주",
-            "rank": 1.0,
-            "price": 36084.00,
-            "percent": 1.6400
-        },
-        {
-            "code": "066570",
-            "codeName": "LG전자",
-            "rank": 2.0,
-            "price": 102508.00,
-            "percent": 0.4900
-        },
-        {
-            "code": "047810",
-            "codeName": "한국항공우주",
-            "rank": 3.0,
-            "price": 56536.00,
-            "percent": 0.7700
-        },
-        {
-            "code": "105560",
-            "codeName": "KB금융",
-            "rank": 4.0,
-            "price": 50214.00,
-            "percent": -0.9600
-        },
-        {
-            "code": "139480",
-            "codeName": "이마트",
-            "rank": 5.0,
-            "price": 105463.00,
-            "percent": 0.4400
-        }
-    ]
+    "response": {
+        "dropALot": [
+            {
+                "code": "024110",
+                "codeName": "기업은행",
+                "rank": 1.0,
+                "price": 8929.00,
+                "percent": -7.8600
+            },
+            {
+                "code": "010140",
+                "codeName": "삼성중공업",
+                "rank": 2.0,
+                "price": 5674.00,
+                "percent": -5.2800
+            },
+            {
+                "code": "272210",
+                "codeName": "한화시스템",
+                "rank": 3.0,
+                "price": 14507.00,
+                "percent": -5.1900
+            },
+            {
+                "code": "030000",
+                "codeName": "제일기획",
+                "rank": 4.0,
+                "price": 21517.00,
+                "percent": -3.7300
+            },
+            {
+                "code": "003410",
+                "codeName": "쌍용C&E",
+                "rank": 5.0,
+                "price": 6771.00,
+                "percent": -3.6900
+            }
+        ],
+        "riseALot": [
+            {
+                "code": "008560",
+                "codeName": "메리츠증권",
+                "rank": 1.0,
+                "price": 5309.00,
+                "percent": 7.6800
+            },
+            {
+                "code": "018880",
+                "codeName": "한온시스템",
+                "rank": 2.0,
+                "price": 11390.00,
+                "percent": 7.4500
+            },
+            {
+                "code": "028670",
+                "codeName": "팬오션",
+                "rank": 3.0,
+                "price": 5876.00,
+                "percent": 6.4400
+            },
+            {
+                "code": "015760",
+                "codeName": "한국전력",
+                "rank": 4.0,
+                "price": 22485.00,
+                "percent": 4.3300
+            },
+            {
+                "code": "088980",
+                "codeName": "맥쿼리인프라",
+                "rank": 5.0,
+                "price": 13331.00,
+                "percent": 3.7400
+            }
+        ],
+        "viewALot": [
+            {
+                "code": "010140",
+                "codeName": "삼성중공업",
+                "rank": 1.0,
+                "price": 5674.00,
+                "percent": -5.2800
+            },
+            {
+                "code": "007070",
+                "codeName": "GS리테일",
+                "rank": 2.0,
+                "price": 24730.00,
+                "percent": -3.4000
+            },
+            {
+                "code": "023530",
+                "codeName": "롯데쇼핑",
+                "rank": 3.0,
+                "price": 101034.00,
+                "percent": -0.4600
+            },
+            {
+                "code": "086280",
+                "codeName": "현대글로비스",
+                "rank": 4.0,
+                "price": 177546.00,
+                "percent": -0.5400
+            },
+            {
+                "code": "066570",
+                "codeName": "LG전자",
+                "rank": 5.0,
+                "price": 102187.00,
+                "percent": 0.1800
+            }
+        ],
+        "volumeHigh": [
+            {
+                "code": "078930",
+                "codeName": "GS",
+                "rank": 1.0,
+                "price": 43781.00,
+                "percent": -0.9500
+            },
+            {
+                "code": "377300",
+                "codeName": "카카오페이",
+                "rank": 2.0,
+                "price": 68629.00,
+                "percent": 0.3300
+            },
+            {
+                "code": "036570",
+                "codeName": "엔씨소프트",
+                "rank": 3.0,
+                "price": 381680.00,
+                "percent": -0.2200
+            },
+            {
+                "code": "003410",
+                "codeName": "쌍용C&E",
+                "rank": 4.0,
+                "price": 6771.00,
+                "percent": -3.6900
+            },
+            {
+                "code": "034220",
+                "codeName": "LG디스플레이",
+                "rank": 5.0,
+                "price": 15685.00,
+                "percent": -3.4800
+            }
+        ]
+    },
+    "suceess": true,
+    "error": null
 }
 ```
 
@@ -359,148 +363,152 @@ curl -v -X GET "http://localhost:8080/v1/stock/rank/{id}"
 HTTP/1.1 200 OK
 Content-type: application/json;charset=UTF-8
 {
-    "riseALot": [
-        {
-            "code": "008560",
-            "codeName": "메리츠증권",
-            "rank": 1.0,
-            "price": 5614.00,
-            "percent": 13.8700
-        },
-        {
-            "code": "028670",
-            "codeName": "팬오션",
-            "rank": 2.0,
-            "price": 6179.00,
-            "percent": 11.9300
-        },
-        {
-            "code": "018880",
-            "codeName": "한온시스템",
-            "rank": 3.0,
-            "price": 11192.00,
-            "percent": 5.5800
-        },
-        {
-            "code": "316140",
-            "codeName": "우리금융지주",
-            "rank": 4.0,
-            "price": 12723.00,
-            "percent": 4.2800
-        },
-        {
-            "code": "015760",
-            "codeName": "한국전력",
-            "rank": 5.0,
-            "price": 22295.00,
-            "percent": 3.4500
-        },
-        {
-            "code": "026960",
-            "codeName": "동서",
-            "rank": 6.0,
-            "price": 26514.00,
-            "percent": 3.3600
-        },
-        {
-            "code": "371460",
-            "codeName": "TIGER 차이나전기차SOLACTIVE",
-            "rank": 7.0,
-            "price": 17138.00,
-            "percent": 3.2400
-        },
-        {
-            "code": "138040",
-            "codeName": "메리츠금융지주",
-            "rank": 8.0,
-            "price": 30696.00,
-            "percent": 2.1400
-        },
-        {
-            "code": "032640",
-            "codeName": "LG유플러스",
-            "rank": 9.0,
-            "price": 12569.00,
-            "percent": 1.7700
-        },
-        {
-            "code": "006360",
-            "codeName": "GS건설",
-            "rank": 10.0,
-            "price": 32058.00,
-            "percent": 1.7700
-        },
-        {
-            "code": "055550",
-            "codeName": "신한지주",
-            "rank": 11.0,
-            "price": 36084.00,
-            "percent": 1.6400
-        },
-        {
-            "code": "005830",
-            "codeName": "DB손해보험",
-            "rank": 12.0,
-            "price": 63345.00,
-            "percent": 1.5100
-        },
-        {
-            "code": "004990",
-            "codeName": "롯데지주",
-            "rank": 13.0,
-            "price": 39468.00,
-            "percent": 1.4600
-        },
-        {
-            "code": "017670",
-            "codeName": "SK텔레콤",
-            "rank": 14.0,
-            "price": 51944.00,
-            "percent": 1.4500
-        },
-        {
-            "code": "036460",
-            "codeName": "한국가스공사",
-            "rank": 15.0,
-            "price": 42288.00,
-            "percent": 1.4100
-        },
-        {
-            "code": "086790",
-            "codeName": "하나금융지주",
-            "rank": 16.0,
-            "price": 39037.00,
-            "percent": 1.3900
-        },
-        {
-            "code": "030200",
-            "codeName": "KT",
-            "rank": 17.0,
-            "price": 38521.00,
-            "percent": 1.3700
-        },
-        {
-            "code": "000060",
-            "codeName": "메리츠화재",
-            "rank": 18.0,
-            "price": 38649.00,
-            "percent": 1.3000
-        },
-        {
-            "code": "008770",
-            "codeName": "호텔신라",
-            "rank": 19.0,
-            "price": 73136.00,
-            "percent": 1.2900
-        },
-        {
-            "code": "047050",
-            "codeName": "포스코인터내셔널",
-            "rank": 20.0,
-            "price": 25445.00,
-            "percent": 1.1700
-        }
-    ]
+    "response": {
+        "riseALot": [
+            {
+                "code": "008560",
+                "codeName": "메리츠증권",
+                "rank": 1.0,
+                "price": 5309.00,
+                "percent": 7.6800
+            },
+            {
+                "code": "018880",
+                "codeName": "한온시스템",
+                "rank": 2.0,
+                "price": 11390.00,
+                "percent": 7.4500
+            },
+            {
+                "code": "028670",
+                "codeName": "팬오션",
+                "rank": 3.0,
+                "price": 5876.00,
+                "percent": 6.4400
+            },
+            {
+                "code": "015760",
+                "codeName": "한국전력",
+                "rank": 4.0,
+                "price": 22485.00,
+                "percent": 4.3300
+            },
+            {
+                "code": "088980",
+                "codeName": "맥쿼리인프라",
+                "rank": 5.0,
+                "price": 13331.00,
+                "percent": 3.7400
+            },
+            {
+                "code": "316140",
+                "codeName": "우리금융지주",
+                "rank": 6.0,
+                "price": 12636.00,
+                "percent": 3.5700
+            },
+            {
+                "code": "000060",
+                "codeName": "메리츠화재",
+                "rank": 7.0,
+                "price": 39066.00,
+                "percent": 2.4000
+            },
+            {
+                "code": "138040",
+                "codeName": "메리츠금융지주",
+                "rank": 8.0,
+                "price": 30682.00,
+                "percent": 2.1000
+            },
+            {
+                "code": "371460",
+                "codeName": "TIGER 차이나전기차SOLACTIVE",
+                "rank": 9.0,
+                "price": 16941.00,
+                "percent": 2.0500
+            },
+            {
+                "code": "006360",
+                "codeName": "GS건설",
+                "rank": 10.0,
+                "price": 32128.00,
+                "percent": 1.9900
+            },
+            {
+                "code": "047050",
+                "codeName": "포스코인터내셔널",
+                "rank": 11.0,
+                "price": 25628.00,
+                "percent": 1.9000
+            },
+            {
+                "code": "032640",
+                "codeName": "LG유플러스",
+                "rank": 12.0,
+                "price": 12574.00,
+                "percent": 1.8100
+            },
+            {
+                "code": "000100",
+                "codeName": "유한양행",
+                "rank": 13.0,
+                "price": 57727.00,
+                "percent": 1.6300
+            },
+            {
+                "code": "071050",
+                "codeName": "한국금융지주",
+                "rank": 14.0,
+                "price": 62092.00,
+                "percent": 1.4500
+            },
+            {
+                "code": "021240",
+                "codeName": "코웨이",
+                "rank": 15.0,
+                "price": 65946.00,
+                "percent": 1.4500
+            },
+            {
+                "code": "251270",
+                "codeName": "넷마블",
+                "rank": 16.0,
+                "price": 68239.00,
+                "percent": 1.3900
+            },
+            {
+                "code": "026960",
+                "codeName": "동서",
+                "rank": 17.0,
+                "price": 26001.00,
+                "percent": 1.3600
+            },
+            {
+                "code": "012450",
+                "codeName": "한화에어로스페이스",
+                "rank": 18.0,
+                "price": 72186.00,
+                "percent": 1.1000
+            },
+            {
+                "code": "005830",
+                "codeName": "DB손해보험",
+                "rank": 19.0,
+                "price": 63053.00,
+                "percent": 1.0400
+            },
+            {
+                "code": "052690",
+                "codeName": "한전기술",
+                "rank": 20.0,
+                "price": 75661.00,
+                "percent": 1.0100
+            }
+        ]
+    },
+    "suceess": true,
+    "error": null
 }
 ```
 
@@ -530,9 +538,12 @@ curl -v -X POST "http://localhost:8080/v1/stock/random"
 HTTP/1.1 200 OK
 Content-type: application/json;charset=UTF-8
 {
-    
-    "code": 201,
-    "message": "success"
+    "response": null,
+    "suceess": false,
+    "error": {
+        "code": 201,
+        "message": "success"
+    }
 }
 ```
 ---
