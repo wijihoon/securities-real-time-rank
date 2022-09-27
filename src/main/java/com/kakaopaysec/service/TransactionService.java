@@ -107,7 +107,7 @@ public class TransactionService {
 			else							rankReverseSet = zSetOps.reverseRange(key, startIndex, endIndex);
 			
 			Iterator<String> iter		= rankReverseSet.iterator();
-			list	= new ArrayList<>(rankReverseSet.size());
+			list						= new ArrayList<>(rankReverseSet.size());
 			
 			String str	= "";
 			Double i	= (double) 0;
@@ -123,8 +123,8 @@ public class TransactionService {
 						, ++i
 						, ohlcvInfo.get().getClose()
 						, ohlcvInfo.get().getClose().subtract(ohlcvInfo.get().getOpen())
-						.divide(ohlcvInfo.get().getOpen(), 4, RoundingMode.FLOOR)
-						.multiply(new BigDecimal("100"))));
+							.divide(ohlcvInfo.get().getOpen(), 4, RoundingMode.FLOOR)
+							.multiply(new BigDecimal("100"))));
 			}
 			
 		} catch (Exception e) {
@@ -190,10 +190,10 @@ public class TransactionService {
 			investAgentVolRepository.save(new InvestAgentVolInfo(listItemInfo.get(i).getCode()
 					    										, BigDecimal.ONE
 					    										, LocalDateTime.now()
-				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
-				    											, new BigDecimal(Integer.toString(new Random().nextInt(1000)))
+				    											, new BigDecimal(Integer.toString(new Random().nextInt(10000)))
+				    											, new BigDecimal(Integer.toString(new Random().nextInt(10000)))
+				    											, new BigDecimal(Integer.toString(new Random().nextInt(10000)))
+				    											, new BigDecimal(Integer.toString(new Random().nextInt(10000)))
 																));
     		
     		investAgentVolInfo = investAgentVolRepository.findByCode(listItemInfo.get(i).getCode());
@@ -210,9 +210,9 @@ public class TransactionService {
     		//거래량 많은
     		zSetOps.add("volumeHigh", listItemInfo.get(i).getCode()
     								, investAgentVolInfo.get().getForeighVolume()
-									.add(investAgentVolInfo.get().getIstttVolume())
-									.add(investAgentVolInfo.get().getIndiVolume())
-									.doubleValue());
+										.add(investAgentVolInfo.get().getIstttVolume())
+										.add(investAgentVolInfo.get().getIndiVolume())
+										.doubleValue());
     	}
 	}
 	
