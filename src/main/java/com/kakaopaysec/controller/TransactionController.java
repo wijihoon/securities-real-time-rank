@@ -55,7 +55,7 @@ public class TransactionController {
         }
     }
     
-    @PostMapping(value = {"/randomRank"})
+    @PostMapping(value = {"/random"})
     public ResponseEntity<?> updateRandomRank(){
         try {
             rankRedisSevice.updateRandomRank();
