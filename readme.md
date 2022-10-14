@@ -1,4 +1,4 @@
-## kakaopay securities real-time rank
+## securities real-time rank
 ---
 ## 목차
 - [개발 환경](#개발-환경)
